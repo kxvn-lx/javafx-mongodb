@@ -4,23 +4,26 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.SalesController">
-   <children>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+
+<BorderPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.SalesController">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button fx:id="tambahBtn" mnemonicParsing="false" onAction="#handleTambahBtn" prefHeight="25.0" prefWidth="83.0" text="Tambah" />
-            <Button fx:id="rubahBtn" disable="true" mnemonicParsing="false" onAction="#handleRubahBtn" prefHeight="25.0" prefWidth="83.0" text="Rubah" />
-            <Button fx:id="hapusBtn" disable="true" mnemonicParsing="false" onAction="#handleHapusBtn" prefHeight="25.0" prefWidth="83.0" text="Hapus" />
+          <Button fx:id="tambahBtn" mnemonicParsing="false" onAction="#handleTambahBtn" prefHeight="25.0" prefWidth="85.0" text="Tambah" />
+            <Button fx:id="rubahBtn" disable="true" mnemonicParsing="false" onAction="#handleRubahBtn" prefHeight="25.0" prefWidth="85.0" text="Rubah" />
+            <Button fx:id="hapusBtn" disable="true" mnemonicParsing="false" onAction="#handleHapusBtn" prefHeight="25.0" prefWidth="85.0" text="Hapus" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableView" prefHeight="335.0" prefWidth="576.0">
+   </top>
+   <center>
+      <TableView fx:id="tableView" prefHeight="335.0" prefWidth="576.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="noSalesmanTbCol" prefWidth="100.0" text="No_salesman" />
           <TableColumn fx:id="namaCol" prefWidth="96.0" text="Nama" />
             <TableColumn fx:id="alamatCol" prefWidth="104.0" text="Alamat" />
         </columns>
       </TableView>
-   </children>
-</VBox>
+   </center>
+</BorderPane>

@@ -5,13 +5,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ViewFactory {
-    private VBox salesView;
+    private BorderPane salesView;
     private BorderPane langgananView;
     private final StringProperty clientSelectedMenuItem;
 
@@ -23,7 +22,7 @@ public class ViewFactory {
         return clientSelectedMenuItem;
     }
 
-    public VBox getSalesView() {
+    public BorderPane getSalesView() {
         if (salesView == null) {
             try {salesView = new FXMLLoader(getClass().getResource("/com/example/bjb2/Sales.fxml")).load();}
             catch(Exception e) {e.printStackTrace();}

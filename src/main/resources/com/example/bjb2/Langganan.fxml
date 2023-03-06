@@ -10,9 +10,9 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button fx:id="tambahBtn" mnemonicParsing="false" onAction="#handleTambahBtn" text="Tambah" />
-            <Button fx:id="rubahBtn" disable="true" mnemonicParsing="false" onAction="#handleRubahBtn" text="Rubah" />
-            <Button fx:id="hapusBtn" disable="true" mnemonicParsing="false" onAction="#handleHapusBtn" text="Hapus" />
+          <Button prefWidth="85.0" fx:id="tambahBtn" mnemonicParsing="false" onAction="#handleTambahBtn" text="Tambah" />
+            <Button prefWidth="85.0" fx:id="rubahBtn" disable="true" mnemonicParsing="false" onAction="#handleRubahBtn" text="Rubah" />
+            <Button prefWidth="85.0" fx:id="hapusBtn" disable="true" mnemonicParsing="false" onAction="#handleHapusBtn" text="Hapus" />
         </items>
       </ToolBar>
    </top>
