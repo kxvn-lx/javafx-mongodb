@@ -1,10 +1,8 @@
 package com.example.bjb2.Controllers;
 
 import com.example.Database.Models.Langganan;
-import com.example.Database.Models.Salesman;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
