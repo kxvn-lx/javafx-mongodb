@@ -9,9 +9,9 @@ module com.example.bjb2 {
 
     opens com.example.bjb2 to javafx.fxml;
     opens com.example.bjb2.Controllers to javafx.fxml;
-    opens com.example.Database.Models to javafx.model;
+    opens com.example.Database to javafx.model;
 
     exports com.example.bjb2;
-    exports com.example.Database.Models;
+    exports com.example.Database;
     exports com.example.bjb2.Controllers;
 }

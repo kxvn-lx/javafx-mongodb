@@ -5,11 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19cb7d07-3a2a-4ee5-b0bf-e32335f40234" name="Changes" comment="Code cleanup AddLanggananController">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/LanggananDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/SalesDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/StockDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/Models/Langganan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/Langganan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/Models/Salesman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/Salesman.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/Models/Stock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/Stock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/AddLanggananController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/AddLanggananController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/AddStockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/AddStockController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/AddsalesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/AddsalesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/LanggananController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/LanggananController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/SalesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/SalesController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/StockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/StockController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Views/ViewFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Views/ViewFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Stock.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Stock.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Menu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +112,17 @@
         <option value="Default.Subject" />
         <option value="Space.CommitStatus" />
       </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">

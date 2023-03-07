@@ -1,9 +1,7 @@
 package com.example.bjb2.Controllers;
 
-import com.example.Database.Models.Langganan;
-import com.example.Database.Models.Salesman;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.example.Database.Langganan;
+import com.example.Database.LanggananDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +20,7 @@ public class LanggananController implements Initializable {
     @FXML private TableColumn<Langganan, String> alamatCol;
     @FXML private Button rubahBtn;
     @FXML private Button hapusBtn;
-    private final ObservableList<Langganan> data = FXCollections.observableArrayList();
+    private LanggananDAO dao;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -30,7 +28,11 @@ public class LanggananController implements Initializable {
         namaCol.setCellValueFactory(new PropertyValueFactory<>("nama"));
         alamatCol.setCellValueFactory(new PropertyValueFactory<>("alamat"));
 
-        initDummyData();
+        dao = new LanggananDAO();
+        dao.addListener(tableView);
+
+        tableView.getItems().setAll(dao.get());
+
         applyTableViewListeners();
         setupContextMenu();
     }
@@ -50,7 +52,7 @@ public class LanggananController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                tableView.getItems().add(c.getLangganan());
+                dao.add(c.getLangganan());
             }
 
 
@@ -81,7 +83,7 @@ public class LanggananController implements Initializable {
             tableView.getSelectionModel().clearSelection();
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                tableView.getItems().set(index, c.getLangganan());
+                dao.update(index, c.getLangganan());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -100,7 +102,7 @@ public class LanggananController implements Initializable {
         // show the dialog and wait for a response
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                tableView.getItems().remove(selectedItem);
+                dao.delete(selectedItem);
             }
 
             tableView.getSelectionModel().clearSelection();
@@ -108,17 +110,6 @@ public class LanggananController implements Initializable {
     }
 
     /* PRIVATE METHODS */
-    private void initDummyData() {
-        List<Langganan> list = new ArrayList<>(
-                Arrays.asList(
-                        new Langganan("MTH202", "Mentari Jaya", "Perkamil"),
-                        new Langganan("HS", "ENAM", "Jengki"),
-                        new Langganan("MRT101", "Orion", "Morotai"),
-                        new Langganan("BTG050", "Girian", "Bitung") )
-        );
-        data.setAll(list);
-        tableView.getItems().setAll(data);
-    }
     private void applyTableViewListeners() {
         // Listen to selected row
         TableView.TableViewSelectionModel<Langganan> selectionModel = tableView.getSelectionModel();

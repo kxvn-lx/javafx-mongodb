@@ -1,9 +1,7 @@
 package com.example.bjb2.Controllers;
 
-import com.example.Database.Models.Langganan;
-import com.example.Database.Models.Stock;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.example.Database.Stock;
+import com.example.Database.StockDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +22,7 @@ public class StockController implements Initializable {
     @FXML private TableColumn<Stock, String> satuanCol;
     @FXML private Button rubahBtn;
     @FXML private Button hapusBtn;
-    private final ObservableList<Stock> data = FXCollections.observableArrayList();
+    private StockDAO dao;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -34,7 +32,11 @@ public class StockController implements Initializable {
         hargaCol.setCellValueFactory(new PropertyValueFactory<>("harga"));
         satuanCol.setCellValueFactory(new PropertyValueFactory<>("satuan"));
 
-        initDummyData();
+        dao = new StockDAO();
+        dao.addListener(tableView);
+
+        tableView.getItems().setAll(dao.get());
+
         applyTableViewListeners();
         setupContextMenu();
 
@@ -54,7 +56,7 @@ public class StockController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                tableView.getItems().add(c.getStock());
+                dao.add(c.getStock());
             }
 
 
@@ -85,7 +87,7 @@ public class StockController implements Initializable {
             tableView.getSelectionModel().clearSelection();
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                tableView.getItems().set(index, c.getStock());
+                dao.update(index, c.getStock());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -104,7 +106,7 @@ public class StockController implements Initializable {
         // show the dialog and wait for a response
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                tableView.getItems().remove(selectedItem);
+                dao.delete(selectedItem);
             }
 
             tableView.getSelectionModel().clearSelection();
@@ -112,24 +114,6 @@ public class StockController implements Initializable {
     }
 
     /* PRIVATE METHODS */
-    private void initDummyData() {
-        List<Stock> list = new ArrayList<>(
-                Arrays.asList(
-                    new Stock("HD15BP", "Tas 15 /50/20L Ramah Lingkungan", "BAJA", 1011000, "Karung"),
-                        new Stock("PE820", "PE 8x20 @0.2KG/PAK", "Hijau Daun", 360000, "Rol"),
-                        new Stock("PP1000", "PP 1KG 15X27 @5PAK @10KG", "Hijau Daun", 350000, "Kg"),
-                        new Stock("PP6", "PP Rol 6x0.3 @ 30ROL", "Malaikat jatuh", 297000, "Rol"),
-                        new Stock("PP1500", "PE 1 1/2 KG 18x30 @5PAK @10KG", "Hijau Daun", 350000, "Rol"),
-                        new Stock("PE2548", "PE 25x48x0.5 / 5 PAK @10KG", "Hijau Daun", 355000, "Rol"),
-                        new Stock("PE1045", "PE 10x45x0.3 / 5 PAK @10KG @0.2KG/PAK", "Hijau Daun", 350000, "Rol"),
-                        new Stock("PP1400", "PP 1/4 KG 10x17 @5PAK @10KG", "Ramayana", 355000, "Rol"),
-                        new Stock("PE1227", "PE 12x27x0.3 / 5 PAK @10KG", "Hijau Daun", 355000, "Rol"),
-                        new Stock("PP5000", "PE 1/2 KG 12x22 @ 5PAK @10KG", "Hijau Daun", 300000, "Rol")
-                )
-        );
-        data.setAll(list);
-        tableView.getItems().setAll(data);
-    }
     private void applyTableViewListeners() {
         // Listen to selected row
         TableView.TableViewSelectionModel<Stock> selectionModel = tableView.getSelectionModel();

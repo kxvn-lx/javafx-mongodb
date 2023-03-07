@@ -1,7 +1,6 @@
 package com.example.bjb2.Controllers;
 
-import com.example.Database.Models.Langganan;
-import com.example.Database.Models.Stock;
+import com.example.Database.Stock;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonType;
