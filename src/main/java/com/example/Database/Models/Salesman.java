@@ -1,4 +1,4 @@
-package com.example.Database;
+package com.example.Database.Models;
 
 import org.bson.types.ObjectId;
 

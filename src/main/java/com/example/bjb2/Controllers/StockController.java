@@ -1,7 +1,8 @@
 package com.example.bjb2.Controllers;
 
-import com.example.Database.Stock;
-import com.example.Database.StockDAO;
+import com.example.Database.Models.Stock;
+import com.example.Database.DAO.StockDAO;
+import com.example.bjb2.Controllers.Dialogs.AddStockController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

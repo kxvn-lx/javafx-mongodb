@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<DialogPane fx:id="dialogPane" headerText="Tambah Stock" prefHeight="793.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.AddStockController">
+<DialogPane fx:id="dialogPane" headerText="Tambah Stock" prefHeight="793.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.Dialogs.AddStockController">
    <content>
       <GridPane prefHeight="772.0" prefWidth="865.0">
         <columnConstraints>

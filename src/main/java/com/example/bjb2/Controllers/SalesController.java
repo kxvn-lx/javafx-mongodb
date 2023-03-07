@@ -1,9 +1,8 @@
 package com.example.bjb2.Controllers;
 
-import com.example.Database.SalesDAO;
-import com.example.Database.Salesman;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.example.Database.DAO.SalesDAO;
+import com.example.Database.Models.Salesman;
+import com.example.bjb2.Controllers.Dialogs.AddsalesController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

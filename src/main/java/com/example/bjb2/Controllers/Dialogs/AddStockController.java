@@ -1,6 +1,6 @@
-package com.example.bjb2.Controllers;
+package com.example.bjb2.Controllers.Dialogs;
 
-import com.example.Database.Stock;
+import com.example.Database.Models.Stock;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonType;

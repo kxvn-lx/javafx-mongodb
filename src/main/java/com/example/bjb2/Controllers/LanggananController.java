@@ -1,7 +1,8 @@
 package com.example.bjb2.Controllers;
 
-import com.example.Database.Langganan;
-import com.example.Database.LanggananDAO;
+import com.example.Database.Models.Langganan;
+import com.example.Database.DAO.LanggananDAO;
+import com.example.bjb2.Controllers.Dialogs.AddLanggananController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
