@@ -20,6 +20,7 @@ public class MenuController implements Initializable {
     private void addListeners() {
         sales_btn.setOnAction(event -> onSales());
         langganan_btn.setOnAction(event -> onLangganan());
+        stock_btn.setOnAction(event -> onStock());
     }
 
     private void onSales() {
@@ -29,4 +30,6 @@ public class MenuController implements Initializable {
     private void onLangganan() {
         Model.getInstance().getVF().getClientSelectedMenuItem().set("Langganan");
     }
+
+    private void onStock() { Model.getInstance().getVF().getClientSelectedMenuItem().set("Stock"); }
 }

@@ -1,9 +1,6 @@
 package com.example.bjb2.Controllers;
 
 import com.example.Database.Models.Salesman;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

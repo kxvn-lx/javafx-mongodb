@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.StockController">
+    <top>
+        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <items>
+                <Button prefWidth="85.0" fx:id="tambahBtn" mnemonicParsing="false" onAction="#handleTambahBtn" text="Tambah" />
+                <Button prefWidth="85.0" fx:id="rubahBtn" disable="true" mnemonicParsing="false" onAction="#handleRubahBtn" text="Rubah" />
+                <Button prefWidth="85.0" fx:id="hapusBtn" disable="true" mnemonicParsing="false" onAction="#handleHapusBtn" text="Hapus" />
+            </items>
+        </ToolBar>
+    </top>
+    <center>
+        <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="kodeCol" prefWidth="108.0" text="Kode" />
+                <TableColumn fx:id="namaCol" prefWidth="100.0" text="Nama" />
+                <TableColumn fx:id="merekCol" prefWidth="100.0" text="Merek" />
+                <TableColumn fx:id="hargaCol" prefWidth="100.0" text="Harga" />
+                <TableColumn fx:id="satuanCol" prefWidth="100.0" text="Satuan" />
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

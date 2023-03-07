@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 public class ViewFactory {
     private BorderPane salesView;
     private BorderPane langgananView;
+    private BorderPane stockView;
     private final StringProperty clientSelectedMenuItem;
 
     public ViewFactory() {
@@ -37,6 +39,14 @@ public class ViewFactory {
             catch(Exception e) {e.printStackTrace();}
         }
         return langgananView;
+    }
+
+    public BorderPane getStockView() {
+        if (stockView == null) {
+            try { stockView = new FXMLLoader(getClass().getResource("/com/example/bjb2/Stock.fxml")).load(); }
+            catch(Exception e) { e.printStackTrace(); }
+        }
+        return stockView;
     }
 
     public void showClientWindow() {
