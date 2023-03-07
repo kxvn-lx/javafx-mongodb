@@ -1,6 +1,6 @@
 package com.example.Database.DAO;
 
-import com.example.Database.Models.Langganan;
+import com.example.Database.Langganan;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;

@@ -12,12 +12,12 @@ module com.example.bjb2 {
     opens com.example.Database to javafx.model;
 
     exports com.example.bjb2;
-    exports com.example.Database;
-    exports com.example.bjb2.Controllers;
-    exports com.example.Database.Models;
-    opens com.example.Database.Models to javafx.model;
     exports com.example.Database.DAO;
+
+    exports com.example.bjb2.Controllers;
+
     opens com.example.Database.DAO to javafx.model;
     exports com.example.bjb2.Controllers.Dialogs;
     opens com.example.bjb2.Controllers.Dialogs to javafx.fxml;
+    exports com.example.Database;
 }

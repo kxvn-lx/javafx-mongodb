@@ -1,6 +1,6 @@
 package com.example.Database.DAO;
 
-import com.example.Database.Models.Stock;
+import com.example.Database.Stock;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;

@@ -1,7 +1,7 @@
 package com.example.bjb2.Controllers;
 
 import com.example.Database.DAO.SalesDAO;
-import com.example.Database.Models.Salesman;
+import com.example.Database.Salesman;
 import com.example.bjb2.Controllers.Dialogs.AddsalesController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
