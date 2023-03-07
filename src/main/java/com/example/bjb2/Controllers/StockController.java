@@ -37,6 +37,7 @@ public class StockController implements Initializable {
         initDummyData();
         applyTableViewListeners();
         setupContextMenu();
+
     }
 
     public void handleTambahBtn(ActionEvent event) {

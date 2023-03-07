@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +24,13 @@ public class AddStockController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dialogPane.lookupButton(ButtonType.OK).setDisable(true);
+        // force the field to be numeric only
+        hargaTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                hargaTF.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
         applyTFsListeners();
     }
 
