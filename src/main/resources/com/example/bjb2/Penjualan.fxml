@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="400.0" prefWidth="801.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.PenjualanController">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button fx:id="tambahBtn" mnemonicParsing="false" onAction="#handleTambahBtn" text="Tambah" />
+            <Button fx:id="rubahBtn" mnemonicParsing="false" text="Rubah" />
+            <Button fx:id="hapusBtn" mnemonicParsing="false" text="Hapus" />
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="noFakturCol" prefWidth="75.0" text="No.Faktur" />
+          <TableColumn fx:id="noSalesmanCol" prefWidth="88.0" text="No.Salesman" />
+            <TableColumn fx:id="noLanggananCol" prefWidth="146.0" text="No. Langganan" />
+            <TableColumn fx:id="tanggalCol" prefWidth="116.50373077392578" text="Tanggal" />
+            <TableColumn fx:id="statusCol" prefWidth="55.0" text="Status" />
+            <TableColumn fx:id="stocksCol" prefWidth="94.0" text="Barang Terjual" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

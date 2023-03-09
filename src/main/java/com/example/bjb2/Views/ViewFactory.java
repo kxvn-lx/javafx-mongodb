@@ -15,6 +15,7 @@ public class ViewFactory {
     private BorderPane salesView;
     private BorderPane langgananView;
     private AnchorPane stockView;
+    private BorderPane penjualanView;
     private final StringProperty clientSelectedMenuItem;
 
     public ViewFactory() {
@@ -48,6 +49,14 @@ public class ViewFactory {
             catch(Exception e) { e.printStackTrace(); }
         }
         return stockView;
+    }
+
+    public BorderPane getPenjualanView() {
+        if (penjualanView == null) {
+            try { penjualanView = new FXMLLoader(getClass().getResource("/com/example/bjb2/Penjualan.fxml")).load(); }
+            catch(Exception e) { e.printStackTrace(); }
+        }
+        return penjualanView;
     }
 
     public void showClientWindow() {

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<DialogPane fx:id="dialogPane" headerText="Form Tambah Barang Terjual" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.Dialogs.AddPenjualanStockController">
+   <content>
+      <GridPane prefHeight="670.0" prefWidth="300.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="185.60736083984375" minWidth="10.0" prefWidth="75.00738525390625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.99261474609375" minWidth="10.0" prefWidth="302.99261474609375" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="204.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="204.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="252.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="308.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kd. Stock:" />
+            <HBox spacing="25.0" GridPane.columnIndex="1">
+               <children>
+                  <TextField fx:id="kdStockTF" prefHeight="25.0" prefWidth="96.0" />
+                  <ListView fx:id="listView" prefHeight="500.0" prefWidth="200.0" />
+               </children>
+            </HBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nama:" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+               <children>
+                  <Text fx:id="namaText" strokeType="OUTSIDE" strokeWidth="0.0" text="PE ROL 5 KG" />
+                  <Text fx:id="merekText" strokeType="OUTSIDE" strokeWidth="0.0" text="BAJA" />
+               </children>
+            </HBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Qty:" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+               <children>
+                  <TextField fx:id="qtyTF" prefHeight="26.0" prefWidth="59.0" />
+                  <Text fx:id="satuanText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+               </children>
+            </HBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Harga:" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+            <Text fx:id="hargaText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

@@ -9,6 +9,8 @@ import javafx.scene.control.TableView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SalesDAO {
     private final ObservableList<Salesman> data = FXCollections.observableArrayList();
@@ -48,13 +50,21 @@ public class SalesDAO {
         data.remove(s);
     }
 
+    public Optional<Salesman> find(Integer noSalesman) {
+        List<Salesman> l = data.stream()
+                .filter(salesman -> salesman.getNo_salesman() == noSalesman)
+                .collect(Collectors.toList());
+
+        return Optional.of(l.get(0));
+    }
+
     private List<Salesman> fetchFromMongo() {
-        List<Salesman> salesmanList = new ArrayList<Salesman>(
+        List<Salesman> salesmanList = new ArrayList<>(
                 Arrays.asList(
                         new Salesman("R", 01, "Perkamil"),
                         new Salesman("C", 02, "Tuminting"),
                         new Salesman("E-BJ", 04, "Bahu"),
-                        new Salesman("ADMIN", 14, "Interweb") )
+                        new Salesman("ADMIN", 14, "Interweb"))
         );
         return salesmanList;
     }

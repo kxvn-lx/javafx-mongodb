@@ -1,6 +1,7 @@
 package com.example.Database.DAO;
 
 import com.example.Database.Langganan;
+import com.example.Database.Salesman;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -9,6 +10,8 @@ import javafx.scene.control.TableView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class LanggananDAO {
     private final ObservableList<Langganan> data = FXCollections.observableArrayList();
@@ -60,4 +63,11 @@ public class LanggananDAO {
     }
 
 
+    public Optional<Langganan> find(String noLangganan) {
+        List<Langganan> l = data.stream()
+                .filter(langganan -> langganan.getNo_langganan().equals(noLangganan.toUpperCase()))
+                .collect(Collectors.toList());
+
+        return Optional.of(l.get(0));
+    }
 }

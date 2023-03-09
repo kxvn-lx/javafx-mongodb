@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class StockDAO {
     private final ObservableList<Stock> data = FXCollections.observableArrayList();
@@ -38,6 +39,15 @@ public class StockDAO {
 
     public ObservableList<Stock> get() {
         return data;
+    }
+
+    public Optional<Stock> find(String kdStock) {
+        for (Stock s : data) {
+            if (s.getKode().equals(kdStock)) {
+                return Optional.of(s);
+            }
+        }
+    return null;
     }
 
     public void update(int index, Stock s) {
