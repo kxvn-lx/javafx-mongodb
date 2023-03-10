@@ -68,6 +68,7 @@ public class LanggananDAO {
                 .filter(langganan -> langganan.getNo_langganan().equals(noLangganan.toUpperCase()))
                 .collect(Collectors.toList());
 
-        return Optional.of(l.get(0));
+        if (l.size() > 0) return Optional.of(l.get(0));
+        else return Optional.empty();
     }
 }

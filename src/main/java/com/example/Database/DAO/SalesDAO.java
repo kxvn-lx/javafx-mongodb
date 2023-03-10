@@ -55,7 +55,8 @@ public class SalesDAO {
                 .filter(salesman -> salesman.getNo_salesman() == noSalesman)
                 .collect(Collectors.toList());
 
-        return Optional.of(l.get(0));
+        if (l.size() > 0) return Optional.of(l.get(0));
+        else return Optional.empty();
     }
 
     private List<Salesman> fetchFromMongo() {

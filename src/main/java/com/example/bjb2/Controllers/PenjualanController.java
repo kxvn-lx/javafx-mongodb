@@ -66,7 +66,7 @@ public class PenjualanController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                System.out.println(c.getPenjualan());
+                dao.add(c.getPenjualan());
             }
 
 

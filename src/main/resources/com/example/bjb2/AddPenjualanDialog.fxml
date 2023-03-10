@@ -39,19 +39,19 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Faktur" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Salesman" GridPane.rowIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Langganan" GridPane.rowIndex="2" />
-                              <TextField fx:id="noFakturTF" GridPane.columnIndex="1" />
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="125.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                              <TextField fx:id="noFakturTF" prefHeight="25.0" prefWidth="50.0" GridPane.columnIndex="1" />
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <TextField fx:id="noSalesmanTF" prefHeight="25.0" prefWidth="61.0">
+                                    <TextField fx:id="noSalesmanTF" maxWidth="75.0" minWidth="75.0" prefHeight="25.0" prefWidth="75.0">
                                        <HBox.margin>
                                           <Insets right="25.0" />
                                        </HBox.margin></TextField>
-                                    <Text fx:id="salesman_namaText" strokeType="OUTSIDE" strokeWidth="0.0" text=" " />
+                                    <Text fx:id="salesman_namaText" strokeType="OUTSIDE" strokeWidth="0.0" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <TextField fx:id="noLanggananTF" prefHeight="25.0" prefWidth="131.0">
+                                    <TextField fx:id="noLanggananTF" minWidth="100.0" prefHeight="25.0" prefWidth="100.0">
                                        <HBox.margin>
                                           <Insets right="25.0" />
                                        </HBox.margin></TextField>
@@ -111,7 +111,7 @@
             </BorderPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Text fx:id="totalText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text fx:id="totalText" strokeType="OUTSIDE" strokeWidth="0.0" text="Rp.0,00" />
                </children>
             </HBox>
          </children>

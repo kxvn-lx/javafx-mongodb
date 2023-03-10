@@ -8,7 +8,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,9 +17,8 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.text.NumberFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddPenjualanController implements Initializable {
@@ -33,6 +31,7 @@ public class AddPenjualanController implements Initializable {
     @FXML private TextField statusTF;
     @FXML private TextField kreditTF;
     @FXML private HBox kreditHBox;
+    @FXML private Text totalText;
     @FXML private DialogPane dialogPane;
     @FXML private TableColumn<PenjualanStock, String> kdStockCol;
     @FXML private TableColumn<PenjualanStock, String> namaStockCol;
@@ -53,6 +52,7 @@ public class AddPenjualanController implements Initializable {
         salesDAO = new SalesDAO();
         langgananDAO = new LanggananDAO();
         dialogPane.lookupButton(ButtonType.OK).setDisable(true);
+        setupContextMenu();
 
         // create a change listener to monitor the optional value
         p.addListener((observable, oldValue, newValue) -> {
@@ -61,19 +61,29 @@ public class AddPenjualanController implements Initializable {
             }
         });
 
-
         applyTFsListeners();
         applyColCellFactory();
 
         // Listen to tableView updates
         tableView.getItems().addListener((ListChangeListener.Change<? extends PenjualanStock> change) -> {
             while (change.next()) {
-                if (change.wasAdded()) {
-                    List<? extends PenjualanStock> addedItems = change.getAddedSubList();
-                    System.out.println("New row(s) added: " + addedItems);
+                if (change.wasAdded() || change.wasRemoved()) {
+                    validateForm();
+
+                    NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
+                    totalText.setText(formatRupiah.format(Double.parseDouble(calculateJumlah())));
                 }
             }
         });
+
+        // Get the latest noFaktur
+        List<Penjualan> allPs = penjualanDAO.get();
+        Penjualan latestPenjualan = allPs.stream()
+                .max(Comparator.comparingInt(Penjualan::getNoFaktur))
+                .orElse(null);
+
+        assert latestPenjualan != null;
+        noFakturTF.setText(Integer.toString(latestPenjualan.getNoFaktur() + 1));
     }
 
     public void handleTambahBtn() {
@@ -98,8 +108,7 @@ public class AddPenjualanController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
-    public void handleRubahBtn(ActionEvent event) {
+    public void handleRubahBtn() {
 //        try {
 //            FXMLLoader fxmlLoader = new FXMLLoader();
 //            fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddStockDialog.fxml"));
@@ -128,34 +137,32 @@ public class AddPenjualanController implements Initializable {
 //            throw new RuntimeException(e);
 //        }
     }
-    public void handleHapusBtn(ActionEvent event) {
+    public void handleHapusBtn() {
         // Get the selection model
-//        TableView.TableViewSelectionModel<Stock> selectionModel = tableView.getSelectionModel();
-//        // Get the selected item
-//        Stock selectedItem = selectionModel.getSelectedItem();
-//
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setTitle("Konfirmasi penghapusan Stock");
-//        alert.setHeaderText("Anda yakin akan menghapus: " + selectedItem.toString());
-//
-//        // show the dialog and wait for a response
-//        alert.showAndWait().ifPresent(response -> {
-//            if (response == ButtonType.OK) {
-//                dao.delete(selectedItem);
-//            }
-//
-//            tableView.getSelectionModel().clearSelection();
-//        });
-    }
+        TableView.TableViewSelectionModel<PenjualanStock> selectionModel = tableView.getSelectionModel();
+        // Get the selected item
+        PenjualanStock selectedItem = selectionModel.getSelectedItem();
 
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Konfirmasi penghapusan stock");
+        alert.setHeaderText("Anda yakin akan menghapus: " + selectedItem.toString());
+
+        // show the dialog and wait for a response
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                tableView.getItems().remove(selectedItem);
+            }
+
+            tableView.getSelectionModel().clearSelection();
+        });
+    }
     public boolean isNull() {
         return noFakturTF.getText().isEmpty() || noSalesmanTF.getText().isEmpty() || noLanggananTF.getText().isEmpty() || tanggalTF.getText().isEmpty() || statusTF.getText().isEmpty() || tableView.getItems().isEmpty();
     }
-
     public Penjualan getPenjualan() {
         List<PenjualanStock> pjs = tableView.getItems();
 
-        return new Penjualan(Integer.parseInt(noFakturTF.getText()), Integer.parseInt(noSalesmanTF.getText()), noLanggananTF.getText(), tanggalTF.getText(), Status.get(statusTF.getText()), (PenjualanStock[]) pjs.toArray());
+        return new Penjualan(Integer.parseInt(noFakturTF.getText()), Integer.parseInt(noSalesmanTF.getText()), noLanggananTF.getText().toUpperCase(), tanggalTF.getText(), Status.get(statusTF.getText()), pjs.toArray(new PenjualanStock[0]));
     }
 
     private void applyColCellFactory() {
@@ -169,7 +176,6 @@ public class AddPenjualanController implements Initializable {
             return new SimpleStringProperty(Integer.toString(jumlah));
         });
     }
-
     private void applyTFsListeners() {
         TextField[] tfs = {noFakturTF, noSalesmanTF, noLanggananTF, tanggalTF, statusTF};
         for (TextField tf : tfs) {
@@ -179,7 +185,13 @@ public class AddPenjualanController implements Initializable {
         // Listen to NoFaktur textfield
         List<Penjualan> penjualanList = penjualanDAO.get();
         noFakturTF.textProperty().addListener(((observableValue, s, t1) -> {
-            if (noFakturTF.getText().isEmpty()) return;
+            if (noFakturTF.getText().isEmpty()) {
+                noSalesmanTF.setText("");
+                noLanggananTF.setText("");
+                tanggalTF.setText("");
+                statusTF.setText("");
+                return;
+            };
 
             List<Penjualan> filtered = penjualanList.stream()
                     .filter(penjualan -> penjualan.getNoFaktur() == Integer.parseInt(noFakturTF.getText()))
@@ -202,6 +214,7 @@ public class AddPenjualanController implements Initializable {
         }));
 
         noSalesmanTF.textProperty().addListener(((observableValue, s, t1) -> {
+            if (t1.isEmpty()) { return; }
             Optional<Salesman> salesman = salesDAO.find(Integer.parseInt(t1));
             if (salesman.isPresent()) {
                 salesman_namaText.setText(salesman.get().getNama());
@@ -219,7 +232,6 @@ public class AddPenjualanController implements Initializable {
             }
         }));
     }
-
     /**
      * Update the UI when Penjualan is found
      */
@@ -231,9 +243,28 @@ public class AddPenjualanController implements Initializable {
         langganan_namaText.setText(l.get().getNama());
 
     }
-
-
+    private String calculateJumlah() {
+        int sum = 0;
+        for (int i = 0; i < tableView.getItems().size(); i++) {
+            sum += tableView.getItems().get(i).getQty() * tableView.getItems().get(i).getStock().getHarga(); // Replace getColumn1 with the appropriate method to get the value in the desired column
+        }
+        return Integer.toString(sum);
+    }
     private void validateForm() {
         dialogPane.lookupButton(ButtonType.OK).setDisable(isNull());
     }
+    private void setupContextMenu() {
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem menuItem1 = new MenuItem("Deselect");
+        menuItem1.setOnAction(event -> {
+            tableView.getSelectionModel().clearSelection();
+        });
+        contextMenu.getItems().addAll(menuItem1);
+
+        tableView.setContextMenu(contextMenu);
+        tableView.setOnContextMenuRequested(event -> {
+            contextMenu.show(tableView, event.getScreenX(), event.getScreenY());
+        });
+    }
+
 }
