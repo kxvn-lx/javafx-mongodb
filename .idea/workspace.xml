@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19cb7d07-3a2a-4ee5-b0bf-e32335f40234" name="Changes" comment="Code cleanup AddLanggananController">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddPenjualanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddPenjualanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/PenjualanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/PenjualanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Penjualan.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Penjualan.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,6 +121,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="com.mongodb.MongoTimeoutException" package="com.mongodb" />
           <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="2" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>

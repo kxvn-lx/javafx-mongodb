@@ -29,7 +29,7 @@ public class AddPenjualanController implements Initializable {
     @FXML private Text langganan_namaText;
     @FXML private TextField tanggalTF;
     @FXML private ChoiceBox<Status> statusCB;
-    @FXML private TextField kreditTF;
+    @FXML private TextField kreditTF; //TODO: finish implementing kreditTF
     @FXML private HBox kreditHBox;
     @FXML private Text totalText;
     @FXML private DialogPane dialogPane;
@@ -41,7 +41,7 @@ public class AddPenjualanController implements Initializable {
     @FXML private TableView<PenjualanStock> tableView;
     @FXML private Button rubahBtn;
     @FXML private Button hapusBtn;
-    @FXML private ListView<String> suggestionListView;
+    @FXML private ListView<Object> suggestionListView;
     private PenjualanDAO penjualanDAO;
     private SalesDAO salesDAO;
     private LanggananDAO langgananDAO;
@@ -251,7 +251,7 @@ public class AddPenjualanController implements Initializable {
             List<Salesman> arr = salesDAO.findByN(t1);
             suggestionListView.getItems().clear();
             for (Salesman salesman: arr) {
-                suggestionListView.getItems().add(salesman.toString());
+                suggestionListView.getItems().add(salesman);
             }
         });
 
@@ -275,14 +275,20 @@ public class AddPenjualanController implements Initializable {
             List<Langganan> arr = langgananDAO.findByN(t1);
             suggestionListView.getItems().clear();
             for (Langganan l: arr) {
-                suggestionListView.getItems().add(l.toString());
+                suggestionListView.getItems().add(l);
             }
         });
 
-        suggestionListView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                System.out.println(suggestionListView.getSelectionModel().getSelectedItem());
+        suggestionListView.getSelectionModel().selectedItemProperty().addListener((observableValue, o, t1) -> {
+            if (t1 == null) { return; }
+            if (t1 instanceof Salesman) {
+                Salesman s = (Salesman) t1;
+                noSalesmanTF.setText(Integer.toString(s.getNo_salesman()));
+            } else if (t1 instanceof Langganan) {
+                Langganan l = (Langganan) t1;
+                noLanggananTF.setText(l.getNo_langganan());
             }
+            suggestionListView.getItems().clear();
         });
 
         // statusCB listener
