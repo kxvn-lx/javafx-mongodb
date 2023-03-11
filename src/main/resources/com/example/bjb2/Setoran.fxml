@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.SetoranController">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button fx:id="rubahBtn" mnemonicParsing="false" onAction="#handleRubahBtn" text="Rubah" />
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="noFakturCol" prefWidth="75.0" text="No. Faktur" />
+          <TableColumn fx:id="jumlahCol" prefWidth="75.0" text="Jumlah" />
+            <TableColumn fx:id="setoranCol" prefWidth="75.0" text="Setoran" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

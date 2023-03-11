@@ -26,17 +26,13 @@ public class MenuController implements Initializable {
         penjualan_btn.setOnAction(event -> onPenjualan());
         setoran_btn.setOnAction(event -> onSetoran());
     }
-
     private void onSales() {
         Model.getInstance().getVF().getClientSelectedMenuItem().set("Sales");
     }
-
     private void onLangganan() {
         Model.getInstance().getVF().getClientSelectedMenuItem().set("Langganan");
     }
-
     private void onStock() { Model.getInstance().getVF().getClientSelectedMenuItem().set("Stock"); }
-
     private void onPenjualan() { Model.getInstance().getVF().getClientSelectedMenuItem().set("Penjualan"); }
     private void onSetoran() { Model.getInstance().getVF().getClientSelectedMenuItem().set("Setoran"); }
 }

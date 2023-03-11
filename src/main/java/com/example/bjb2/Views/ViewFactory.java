@@ -16,6 +16,7 @@ public class ViewFactory {
     private BorderPane langgananView;
     private AnchorPane stockView;
     private BorderPane penjualanView;
+    private BorderPane setoranView;
     private final StringProperty clientSelectedMenuItem;
 
     public ViewFactory() {
@@ -25,7 +26,6 @@ public class ViewFactory {
     public StringProperty getClientSelectedMenuItem() {
         return clientSelectedMenuItem;
     }
-
     public BorderPane getSalesView() {
         if (salesView == null) {
             try {salesView = new FXMLLoader(getClass().getResource("/com/example/bjb2/Sales.fxml")).load();}
@@ -34,7 +34,6 @@ public class ViewFactory {
 
         return salesView;
     }
-
     public BorderPane getLanggananView() {
         if (langgananView == null) {
             try {langgananView = new FXMLLoader(getClass().getResource("/com/example/bjb2/Langganan.fxml")).load();}
@@ -42,7 +41,6 @@ public class ViewFactory {
         }
         return langgananView;
     }
-
     public AnchorPane getStockView() {
         if (stockView == null) {
             try { stockView = new FXMLLoader(getClass().getResource("/com/example/bjb2/Stock.fxml")).load(); }
@@ -50,7 +48,6 @@ public class ViewFactory {
         }
         return stockView;
     }
-
     public BorderPane getPenjualanView() {
         if (penjualanView == null) {
             try { penjualanView = new FXMLLoader(getClass().getResource("/com/example/bjb2/Penjualan.fxml")).load(); }
@@ -58,7 +55,13 @@ public class ViewFactory {
         }
         return penjualanView;
     }
-
+    public BorderPane getSetoranView() {
+        if (setoranView == null) {
+            try { setoranView = new FXMLLoader(getClass().getResource("/com/example/bjb2/Setoran.fxml")).load(); }
+            catch(Exception e) { e.printStackTrace(); }
+        }
+        return setoranView;
+    }
     public void showClientWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bjb2/Client.fxml"));
         ClientController clientController = new ClientController();
@@ -75,7 +78,6 @@ public class ViewFactory {
         stage.setTitle("BJB2");
         stage.show();
     }
-
     public void closeStage(Stage stage) {
         stage.close();
     }

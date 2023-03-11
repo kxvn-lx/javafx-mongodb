@@ -45,7 +45,7 @@ public class AddPenjualanController implements Initializable {
     private PenjualanDAO penjualanDAO;
     private SalesDAO salesDAO;
     private LanggananDAO langgananDAO;
-    private ObjectProperty<Optional<Penjualan>> p = new SimpleObjectProperty<>(Optional.empty());;
+    private final ObjectProperty<Optional<Penjualan>> p = new SimpleObjectProperty<>(Optional.empty());;
     private final NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
 
     @Override
@@ -198,6 +198,13 @@ public class AddPenjualanController implements Initializable {
                     totalText.setText(formatRupiah.format(Double.parseDouble(Integer.toString(calculateJumlah()))));
                 }
             }
+        });
+        // Listen to selected row
+        TableView.TableViewSelectionModel<PenjualanStock> selectionModel = tableView.getSelectionModel();
+        // Add a listener to the selection model
+        selectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            rubahBtn.setDisable(newValue == null);
+            hapusBtn.setDisable(newValue == null);
         });
 
         // Listen to NoFaktur textfield

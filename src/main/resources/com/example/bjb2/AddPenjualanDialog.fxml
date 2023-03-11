@@ -112,8 +112,8 @@
                   <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <items>
                       <Button mnemonicParsing="false" onAction="#handleTambahBtn" prefHeight="25.0" prefWidth="84.0" text="Tambah" />
-                        <Button fx:id="rubahBtn" mnemonicParsing="false" onAction="#handleRubahBtn" prefHeight="25.0" prefWidth="85.0" text="Rubah" />
-                        <Button fx:id="hapusBtn" mnemonicParsing="false" onAction="#handleHapusBtn" prefHeight="25.0" prefWidth="85.0" text="Hapus" />
+                        <Button fx:id="rubahBtn" disable="true" mnemonicParsing="false" onAction="#handleRubahBtn" prefHeight="25.0" prefWidth="85.0" text="Rubah" />
+                        <Button fx:id="hapusBtn" disable="true" mnemonicParsing="false" onAction="#handleHapusBtn" prefHeight="25.0" prefWidth="85.0" text="Hapus" />
                     </items>
                   </ToolBar>
                </top>
