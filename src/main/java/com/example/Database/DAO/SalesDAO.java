@@ -13,10 +13,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SalesDAO {
-    private final ObservableList<Salesman> data = FXCollections.observableArrayList();
+    private static final ObservableList<Salesman> data = FXCollections.observableArrayList();
 
     public SalesDAO() {
-        data.setAll(fetchFromMongo());
+        if (data.isEmpty()) data.setAll(fetchFromMongo());
     }
 
     public void addListener(TableView tv) {

@@ -80,10 +80,10 @@
                                  <children>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
                                     <ChoiceBox fx:id="statusCB" prefWidth="150.0" />
-                                    <HBox fx:id="kreditHBox" alignment="CENTER" prefHeight="26.0" prefWidth="119.0" visible="false">
+                                    <HBox fx:id="kreditHBox" alignment="CENTER" prefHeight="26.0" prefWidth="119.0">
                                        <children>
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kredit -&gt;" />
-                                          <TextField fx:id="kreditTF" minWidth="25.0" prefWidth="25.0" />
+                                          <TextField fx:id="kreditTF" minWidth="35.0" prefWidth="35.0" />
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text=": Hari" />
                                        </children>
                                     </HBox>

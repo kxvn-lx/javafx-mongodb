@@ -12,10 +12,10 @@ import java.util.Date;
 import java.util.List;
 
 public class PenjualanDAO {
-    private final ObservableList<Penjualan> data = FXCollections.observableArrayList();
+    private static final ObservableList<Penjualan> data = FXCollections.observableArrayList();
 
     public PenjualanDAO() {
-        data.setAll(fetchFromMongo());
+        if (data.isEmpty()) data.setAll(fetchFromMongo());
     }
 
     public void addListener(TableView tv) {

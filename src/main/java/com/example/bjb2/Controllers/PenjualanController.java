@@ -36,6 +36,9 @@ public class PenjualanController implements Initializable {
     private PenjualanDAO dao;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dao = new PenjualanDAO();
+        dao.addListener(tableView);
+
         noFakturCol.setCellValueFactory(new PropertyValueFactory<>("noFaktur"));
         noSalesmanCol.setCellValueFactory(cd -> new SimpleStringProperty(Integer.toString(cd.getValue().getNoSalesman())));
         noLanggananCol.setCellValueFactory(cd -> {
@@ -45,9 +48,6 @@ public class PenjualanController implements Initializable {
         tanggalCol.setCellValueFactory(new PropertyValueFactory<>("tanggal"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
         stocksCol.setCellValueFactory(cd -> new SimpleStringProperty(Integer.toString(cd.getValue().getPjs().length)));
-
-        dao = new PenjualanDAO();
-        dao.addListener(tableView);
 
         tableView.getItems().setAll(dao.get());
 

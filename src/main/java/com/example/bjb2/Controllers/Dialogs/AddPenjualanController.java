@@ -229,7 +229,7 @@ public class AddPenjualanController implements Initializable {
         }));
 
         noSalesmanTF.textProperty().addListener(((observableValue, s, t1) -> {
-            if (t1.isEmpty()) {
+            if (t1.isEmpty() || !isInteger(t1)) {
                 salesman_namaText.setText("");
                 return;
             }
@@ -323,6 +323,14 @@ public class AddPenjualanController implements Initializable {
         tableView.setOnContextMenuRequested(event -> {
             contextMenu.show(tableView, event.getScreenX(), event.getScreenY());
         });
+    }
+    private boolean isInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }

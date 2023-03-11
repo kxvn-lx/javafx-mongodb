@@ -59,6 +59,7 @@ public class SalesController implements Initializable {
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
                 dao.add(c.getSales());
+
             }
 
 

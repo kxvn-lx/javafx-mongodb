@@ -24,7 +24,7 @@ public class AddLanggananController implements Initializable {
     }
 
     public Langganan getLangganan() {
-        return new Langganan(noLanggananTF.getText(), namaTF.getText(), alamatTF.getText());
+        return new Langganan(noLanggananTF.getText().toUpperCase(), namaTF.getText(), alamatTF.getText());
     }
 
     public boolean isNull() {
