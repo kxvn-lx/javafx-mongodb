@@ -71,7 +71,8 @@ public class PenjualanDAO {
                                     new PenjualanStock(stocks.get(1), 5),
                                     new PenjualanStock(stocks.get(2), 10),
                                     new PenjualanStock(stocks.get(3), 1),
-                            }
+                            },
+                            0
                     )
                 )
         );

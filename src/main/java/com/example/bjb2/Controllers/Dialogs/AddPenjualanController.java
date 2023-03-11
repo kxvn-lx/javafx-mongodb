@@ -46,6 +46,7 @@ public class AddPenjualanController implements Initializable {
     private SalesDAO salesDAO;
     private LanggananDAO langgananDAO;
     private ObjectProperty<Optional<Penjualan>> p = new SimpleObjectProperty<>(Optional.empty());;
+    private final NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -148,7 +149,7 @@ public class AddPenjualanController implements Initializable {
     }
     public Penjualan getPenjualan() {
         List<PenjualanStock> pjs = tableView.getItems();
-        return new Penjualan(Integer.parseInt(noFakturTF.getText()), Integer.parseInt(noSalesmanTF.getText()), noLanggananTF.getText().toUpperCase(), tanggalTF.getText(), statusCB.getValue(), pjs.toArray(new PenjualanStock[0]));
+        return new Penjualan(Integer.parseInt(noFakturTF.getText()), Integer.parseInt(noSalesmanTF.getText()), noLanggananTF.getText().toUpperCase(), tanggalTF.getText(), statusCB.getValue(), pjs.toArray(new PenjualanStock[0]), calculateJumlah());
     }
     public void setTFs(Penjualan p) {
         dialogPane.setHeaderText("Rubah Penjualan");
@@ -159,6 +160,7 @@ public class AddPenjualanController implements Initializable {
         tanggalTF.setText(p.getTanggal());
         statusCB.getSelectionModel().select(p.getStatus());
         tableView.getItems().setAll(p.getPjs());
+        totalText.setText(formatRupiah.format(Double.parseDouble(Integer.toString(p.getJumlah()))));
     }
 
     private void applyColCellFactory() {
@@ -192,8 +194,8 @@ public class AddPenjualanController implements Initializable {
                 if (change.wasAdded() || change.wasRemoved() || change.wasReplaced()) {
                     validateForm();
 
-                    NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
-                    totalText.setText(formatRupiah.format(Double.parseDouble(calculateJumlah())));
+
+                    totalText.setText(formatRupiah.format(Double.parseDouble(Integer.toString(calculateJumlah()))));
                 }
             }
         });
@@ -301,12 +303,12 @@ public class AddPenjualanController implements Initializable {
         langganan_namaText.setText(l.get().getNama());
 
     }
-    private String calculateJumlah() {
+    private int calculateJumlah() {
         int sum = 0;
         for (int i = 0; i < tableView.getItems().size(); i++) {
             sum += tableView.getItems().get(i).getQty() * tableView.getItems().get(i).getStock().getHarga(); // Replace getColumn1 with the appropriate method to get the value in the desired column
         }
-        return Integer.toString(sum);
+        return sum;
     }
     private void validateForm() {
         dialogPane.lookupButton(ButtonType.OK).setDisable(isNull());

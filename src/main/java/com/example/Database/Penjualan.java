@@ -14,14 +14,18 @@ public class Penjualan {
     private String tanggal;
     private Status status;
     private PenjualanStock[] pjs;
+    private Integer jumlah;
+    private Integer setoran;
 
-    public Penjualan(Integer noFaktur, Integer noSalesman, String noLangganan, String tanggal, Status status, PenjualanStock[] pjs) {
+    public Penjualan(Integer noFaktur, Integer noSalesman, String noLangganan, String tanggal, Status status, PenjualanStock[] pjs, Integer jumlah) {
         this.noFaktur = noFaktur;
         this.noSalesman = noSalesman;
         this.noLangganan = noLangganan;
         this.tanggal = tanggal;
         this.status = status;
         this.pjs = pjs;
+        this.jumlah = jumlah;
+        this.setoran = 0;
     }
 
     public Penjualan(ObjectId id, Integer noFaktur, Integer noSalesman, String noLangganan, String tanggal, Status status, PenjualanStock[] pjs) {
@@ -93,4 +97,9 @@ public class Penjualan {
     public void setPenjualanStock(PenjualanStock[] pjs) {
         this.pjs = pjs;
     }
+
+    public int getJumlah() { return jumlah; }
+    public void setJumlah(int jumlah) { this.jumlah = jumlah; }
+    public int getSetoran() { return setoran; }
+    public void setSetoran(int setoran) { this.setoran = setoran; }
 }
