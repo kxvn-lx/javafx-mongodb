@@ -111,7 +111,7 @@ public class AddPenjualanController implements Initializable {
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
-            dialog.setTitle("Form Rubah Stock");
+            dialog.setTitle("Form Rubah Barang Terjual");
 
             tableView.getSelectionModel().clearSelection();
             Optional<ButtonType> clickedButton = dialog.showAndWait();
@@ -132,7 +132,7 @@ public class AddPenjualanController implements Initializable {
         PenjualanStock selectedItem = selectionModel.getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Konfirmasi penghapusan stock");
+        alert.setTitle("Konfirmasi penghapusan barang yang terjual");
         alert.setHeaderText("Anda yakin akan menghapus: " + selectedItem.toString());
 
         // show the dialog and wait for a response

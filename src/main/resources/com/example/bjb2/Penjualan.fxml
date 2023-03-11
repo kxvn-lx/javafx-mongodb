@@ -12,7 +12,7 @@
         <items>
           <Button fx:id="tambahBtn" mnemonicParsing="false" onAction="#handleTambahBtn" text="Tambah" />
             <Button fx:id="rubahBtn" disable="true" mnemonicParsing="false" onAction="#handleRubahBtn" text="Rubah" />
-            <Button fx:id="hapusBtn" disable="true" mnemonicParsing="false" text="Hapus" />
+            <Button fx:id="hapusBtn" disable="true" mnemonicParsing="false" onAction="#handleHapusBtn" text="Hapus" />
         </items>
       </ToolBar>
    </top>

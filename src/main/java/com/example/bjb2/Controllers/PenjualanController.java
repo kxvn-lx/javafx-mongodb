@@ -107,6 +107,26 @@ public class PenjualanController implements Initializable {
         }
     }
 
+    public void handleHapusBtn() {
+        // Get the selection model
+        TableView.TableViewSelectionModel<Penjualan> selectionModel = tableView.getSelectionModel();
+        // Get the selected item
+        Penjualan selectedItem = selectionModel.getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Konfirmasi penghapusan Penjualan");
+        alert.setHeaderText("Anda yakin akan menghapus: " + selectedItem.getNoFaktur().toString());
+
+        // show the dialog and wait for a response
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                dao.delete(selectedItem);
+            }
+
+            tableView.getSelectionModel().clearSelection();
+        });
+    }
+
     private void applyTableViewListeners() {
         // Listen to selected row
         TableView.TableViewSelectionModel<Penjualan> selectionModel = tableView.getSelectionModel();
