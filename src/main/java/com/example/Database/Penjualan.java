@@ -78,8 +78,8 @@ public class Penjualan {
         this.tanggal = tanggal;
     }
 
-    public String getStatus() {
-        return status.name();
+    public Status getStatus() {
+        return status;
     }
 
     public void setStatus(Status status) {

@@ -3,7 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -21,72 +23,79 @@
    <content>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
          <children>
-            <VBox>
+            <HBox>
                <children>
-                  <AnchorPane prefHeight="90.0" prefWidth="778.0">
+                  <VBox>
                      <children>
-                        <GridPane prefWidth="394.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <AnchorPane prefHeight="90.0" prefWidth="778.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Faktur" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Salesman" GridPane.rowIndex="1" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Langganan" GridPane.rowIndex="2" />
-                              <TextField fx:id="noFakturTF" prefHeight="25.0" prefWidth="50.0" GridPane.columnIndex="1" />
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <GridPane prefWidth="394.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
                                  <children>
-                                    <TextField fx:id="noSalesmanTF" maxWidth="75.0" minWidth="75.0" prefHeight="25.0" prefWidth="75.0">
-                                       <HBox.margin>
-                                          <Insets right="25.0" />
-                                       </HBox.margin></TextField>
-                                    <Text fx:id="salesman_namaText" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Faktur" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Salesman" GridPane.rowIndex="1" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Langganan" GridPane.rowIndex="2" />
+                                    <TextField fx:id="noFakturTF" prefHeight="25.0" prefWidth="50.0" GridPane.columnIndex="1" />
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <children>
+                                          <TextField fx:id="noSalesmanTF" maxWidth="75.0" minWidth="75.0" prefHeight="25.0" prefWidth="75.0">
+                                             <HBox.margin>
+                                                <Insets right="25.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Text fx:id="salesman_namaText" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <children>
+                                          <TextField fx:id="noLanggananTF" minWidth="100.0" prefHeight="25.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets right="25.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Text fx:id="langganan_namaText" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <children>
-                                    <TextField fx:id="noLanggananTF" minWidth="100.0" prefHeight="25.0" prefWidth="100.0">
-                                       <HBox.margin>
-                                          <Insets right="25.0" />
-                                       </HBox.margin></TextField>
-                                    <Text fx:id="langganan_namaText" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                 </children>
-                              </HBox>
+                              </GridPane>
                            </children>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-                  <HBox prefHeight="42.0" prefWidth="778.0">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                        </AnchorPane>
+                        <HBox prefHeight="42.0" prefWidth="778.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tanggal" />
-                              <TextField fx:id="tanggalTF" prefHeight="25.0" prefWidth="114.0" />
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tanggal" />
+                                    <TextField fx:id="tanggalTF" prefHeight="25.0" prefWidth="114.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="219.0" spacing="20.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
+                                    <ChoiceBox fx:id="statusCB" prefWidth="150.0" />
+                                    <HBox fx:id="kreditHBox" alignment="CENTER" prefHeight="26.0" prefWidth="119.0" visible="false">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kredit -&gt;" />
+                                          <TextField fx:id="kreditTF" minWidth="25.0" prefWidth="25.0" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text=": Hari" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="219.0" spacing="20.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
-                              <TextField fx:id="statusTF" prefHeight="25.0" prefWidth="35.0" />
-                              <HBox fx:id="kreditHBox" alignment="CENTER" prefHeight="26.0" prefWidth="119.0" visible="false">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kredit -&gt;" />
-                                    <TextField fx:id="kreditTF" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=": Hari" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
+                  <ListView fx:id="suggestionListView" prefHeight="115.0" prefWidth="700.0" />
                </children>
-            </VBox>
+            </HBox>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
                   <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">

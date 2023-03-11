@@ -4,7 +4,10 @@ import com.example.Database.DAO.LanggananDAO;
 import com.example.Database.DAO.PenjualanDAO;
 import com.example.Database.Langganan;
 import com.example.Database.Penjualan;
+import com.example.Database.PenjualanStock;
+import com.example.Database.Stock;
 import com.example.bjb2.Controllers.Dialogs.AddPenjualanController;
+import com.example.bjb2.Controllers.Dialogs.AddPenjualanStockController;
 import com.example.bjb2.Controllers.Dialogs.AddStockController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -70,6 +73,35 @@ public class PenjualanController implements Initializable {
             }
 
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void handleRubahBtn() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddPenjualanDialog.fxml"));
+            DialogPane pane = fxmlLoader.load();
+            pane.setHeaderText("Form Rubah Penjualan");
+
+            AddPenjualanController c = fxmlLoader.getController();
+            // Get the selection model
+            TableView.TableViewSelectionModel<Penjualan> selectionModel = tableView.getSelectionModel();
+            // Get the selected item
+            Penjualan selectedItem = selectionModel.getSelectedItem();
+            int index = selectionModel.getSelectedIndex();
+
+            c.setTFs(selectedItem);
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            dialog.setTitle("Form Rubah Penjualan");
+
+            tableView.getSelectionModel().clearSelection();
+            Optional<ButtonType> clickedButton = dialog.showAndWait();
+            if (clickedButton.get() == ButtonType.OK) {
+                dao.update(index, c.getPenjualan());
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

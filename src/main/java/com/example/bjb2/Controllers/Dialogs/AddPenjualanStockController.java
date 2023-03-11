@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddPenjualanStockController implements Initializable {
@@ -31,12 +32,6 @@ public class AddPenjualanStockController implements Initializable {
         dialogPane.lookupButton(ButtonType.OK).setDisable(true);
         stockDAO = new StockDAO();
 
-        qtyTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                qtyTF.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-
         applyTFsListeners();
         setupSuggestionsTF();
     }
@@ -49,11 +44,9 @@ public class AddPenjualanStockController implements Initializable {
             throw new RuntimeException();
         }
     }
-
     public boolean isNull() {
         return kdStockTF.getText().isEmpty() || qtyTF.getText().isEmpty();
     }
-
     public void setTFs(PenjualanStock s) {
         dialogPane.setHeaderText("Rubah Barang Terjual");
 
@@ -68,6 +61,37 @@ public class AddPenjualanStockController implements Initializable {
             tf.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
         }
 
+
+        qtyTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                qtyTF.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        kdStockTF.textProperty().addListener((observableValue, s, t1) -> {
+            if (t1.isEmpty()) {
+                return;
+            }
+            Optional<Stock> stock = stockDAO.find(kdStockTF.getText());
+            if (stock.isEmpty()) { return; }
+
+            namaText.setText(stock.get().getNama());
+            merekText.setText(stock.get().getMerek());
+            hargaText.setText(Integer.toString(stock.get().getHarga()));
+            satuanText.setText(stock.get().getSatuan());
+        });
+
+        kdStockTF.focusedProperty().addListener((observableValue, s, t1) -> {
+            if (!t1) {
+                Optional<Stock> stock = stockDAO.find(kdStockTF.getText());
+                if (stock.isEmpty()) { return; }
+
+                namaText.setText(stock.get().getNama());
+                merekText.setText(stock.get().getMerek());
+                hargaText.setText(Integer.toString(stock.get().getHarga()));
+                satuanText.setText(stock.get().getSatuan());
+            }
+        });
     }
 
     private void setupSuggestionsTF() {
@@ -98,10 +122,8 @@ public class AddPenjualanStockController implements Initializable {
                     }
                 }
                 listView.setItems(filteredList);
-                listView.setVisible(true);
             } else {
                 listView.setItems(stockDAO.get());
-                listView.setVisible(false);
             }
         });
 
@@ -111,7 +133,6 @@ public class AddPenjualanStockController implements Initializable {
             merekText.setText(listView.getSelectionModel().getSelectedItem().getMerek());
             hargaText.setText(Integer.toString(listView.getSelectionModel().getSelectedItem().getHarga()));
             satuanText.setText(listView.getSelectionModel().getSelectedItem().getSatuan());
-            listView.setVisible(false);
         });
     }
 

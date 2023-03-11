@@ -62,6 +62,12 @@ public class LanggananDAO {
         return list;
     }
 
+    public List<Langganan> findByN(String noLangganan) {
+        List<Langganan> arr = new ArrayList<>();
+
+        for (Langganan l : data) { if (l.getNo_langganan().contains(noLangganan.toUpperCase())) arr.add(l); }
+        return arr;
+    }
 
     public Optional<Langganan> find(String noLangganan) {
         List<Langganan> l = data.stream()

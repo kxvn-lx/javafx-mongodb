@@ -43,7 +43,7 @@ public class StockDAO {
 
     public Optional<Stock> find(String kdStock) {
         for (Stock s : data) {
-            if (s.getKode().equals(kdStock)) {
+            if (s.getKode().equals(kdStock.toUpperCase())) {
                 return Optional.of(s);
             }
         }

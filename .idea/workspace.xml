@@ -8,9 +8,14 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/LanggananDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/LanggananDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/SalesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/SalesDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/StockDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/StockDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/Penjualan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/Penjualan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddPenjualanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddPenjualanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddPenjualanStockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddPenjualanStockController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/PenjualanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/PenjualanController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/AddPenjualanDialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/AddPenjualanDialog.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/AddPenjualanStock.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/AddPenjualanStock.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Penjualan.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Penjualan.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +56,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/kevinlaminto/IdeaProjects/bjb2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
   }
 }</component>
   <component name="RunManager">
@@ -128,5 +133,9 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

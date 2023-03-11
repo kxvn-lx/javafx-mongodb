@@ -28,7 +28,7 @@ public class AddPenjualanController implements Initializable {
     @FXML private TextField noLanggananTF;
     @FXML private Text langganan_namaText;
     @FXML private TextField tanggalTF;
-    @FXML private TextField statusTF;
+    @FXML private ChoiceBox<Status> statusCB;
     @FXML private TextField kreditTF;
     @FXML private HBox kreditHBox;
     @FXML private Text totalText;
@@ -41,6 +41,7 @@ public class AddPenjualanController implements Initializable {
     @FXML private TableView<PenjualanStock> tableView;
     @FXML private Button rubahBtn;
     @FXML private Button hapusBtn;
+    @FXML private ListView<String> suggestionListView;
     private PenjualanDAO penjualanDAO;
     private SalesDAO salesDAO;
     private LanggananDAO langgananDAO;
@@ -54,29 +55,7 @@ public class AddPenjualanController implements Initializable {
         dialogPane.lookupButton(ButtonType.OK).setDisable(true);
         setupContextMenu();
 
-        // create a change listener to monitor the optional value
-        p.addListener((observable, oldValue, newValue) -> {
-            if (newValue.isPresent()) {
-                updateWhenPFound();
-            }
-        });
-
-        applyTFsListeners();
-        applyColCellFactory();
-
-        // Listen to tableView updates
-        tableView.getItems().addListener((ListChangeListener.Change<? extends PenjualanStock> change) -> {
-            while (change.next()) {
-                if (change.wasAdded() || change.wasRemoved()) {
-                    validateForm();
-
-                    NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
-                    totalText.setText(formatRupiah.format(Double.parseDouble(calculateJumlah())));
-                }
-            }
-        });
-
-        // Get the latest noFaktur
+        // Get the latest noFaktur and increment by one
         List<Penjualan> allPs = penjualanDAO.get();
         Penjualan latestPenjualan = allPs.stream()
                 .max(Comparator.comparingInt(Penjualan::getNoFaktur))
@@ -84,6 +63,13 @@ public class AddPenjualanController implements Initializable {
 
         assert latestPenjualan != null;
         noFakturTF.setText(Integer.toString(latestPenjualan.getNoFaktur() + 1));
+
+        // Status Choice Box
+        statusCB.getItems().setAll(Status.values());
+        statusCB.getSelectionModel().selectFirst();
+
+        applyListeners();
+        applyColCellFactory();
     }
 
     public void handleTambahBtn() {
@@ -109,33 +95,34 @@ public class AddPenjualanController implements Initializable {
         }
     }
     public void handleRubahBtn() {
-//        try {
-//            FXMLLoader fxmlLoader = new FXMLLoader();
-//            fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddStockDialog.fxml"));
-//            DialogPane pane = fxmlLoader.load();
-//            pane.setHeaderText("Rubah Stock");
-//
-//            AddStockController c = fxmlLoader.getController();
-//            // Get the selection model
-//            TableView.TableViewSelectionModel<Stock> selectionModel = tableView.getSelectionModel();
-//            // Get the selected item
-//            Stock selectedItem = selectionModel.getSelectedItem();
-//            int index = selectionModel.getSelectedIndex();
-//
-//            c.setTFs(selectedItem);
-//
-//            Dialog<ButtonType> dialog = new Dialog<>();
-//            dialog.setDialogPane(pane);
-//            dialog.setTitle("Form Rubah Stock");
-//
-//            tableView.getSelectionModel().clearSelection();
-//            Optional<ButtonType> clickedButton = dialog.showAndWait();
-//            if (clickedButton.get() == ButtonType.OK) {
-//                dao.update(index, c.getStock());
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddPenjualanStock.fxml"));
+            DialogPane pane = fxmlLoader.load();
+            pane.setHeaderText("Rubah Barang Terjual");
+
+            AddPenjualanStockController c = fxmlLoader.getController();
+            // Get the selection model
+            TableView.TableViewSelectionModel<PenjualanStock> selectionModel = tableView.getSelectionModel();
+            // Get the selected item
+            PenjualanStock selectedItem = selectionModel.getSelectedItem();
+            c.setTFs(selectedItem);
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            dialog.setTitle("Form Rubah Stock");
+
+            tableView.getSelectionModel().clearSelection();
+            Optional<ButtonType> clickedButton = dialog.showAndWait();
+            if (clickedButton.get() == ButtonType.OK) {
+                tableView.getItems().replaceAll(penjualanStock ->
+                        penjualanStock.getStock().getKode().equals(c.getPenjualanStock().getStock().getKode()) ?
+                                c.getPenjualanStock() : penjualanStock
+                        );
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void handleHapusBtn() {
         // Get the selection model
@@ -157,12 +144,21 @@ public class AddPenjualanController implements Initializable {
         });
     }
     public boolean isNull() {
-        return noFakturTF.getText().isEmpty() || noSalesmanTF.getText().isEmpty() || noLanggananTF.getText().isEmpty() || tanggalTF.getText().isEmpty() || statusTF.getText().isEmpty() || tableView.getItems().isEmpty();
+        return noFakturTF.getText().isEmpty() || noSalesmanTF.getText().isEmpty() || noLanggananTF.getText().isEmpty() || tanggalTF.getText().isEmpty() || tableView.getItems().isEmpty();
     }
     public Penjualan getPenjualan() {
         List<PenjualanStock> pjs = tableView.getItems();
+        return new Penjualan(Integer.parseInt(noFakturTF.getText()), Integer.parseInt(noSalesmanTF.getText()), noLanggananTF.getText().toUpperCase(), tanggalTF.getText(), statusCB.getValue(), pjs.toArray(new PenjualanStock[0]));
+    }
+    public void setTFs(Penjualan p) {
+        dialogPane.setHeaderText("Rubah Penjualan");
 
-        return new Penjualan(Integer.parseInt(noFakturTF.getText()), Integer.parseInt(noSalesmanTF.getText()), noLanggananTF.getText().toUpperCase(), tanggalTF.getText(), Status.get(statusTF.getText()), pjs.toArray(new PenjualanStock[0]));
+        noFakturTF.setText(Integer.toString(p.getNoFaktur()));
+        noSalesmanTF.setText(Integer.toString(p.getNoSalesman()));
+        noLanggananTF.setText(p.getNoLangganan());
+        tanggalTF.setText(p.getTanggal());
+        statusCB.getSelectionModel().select(p.getStatus());
+        tableView.getItems().setAll(p.getPjs());
     }
 
     private void applyColCellFactory() {
@@ -176,11 +172,31 @@ public class AddPenjualanController implements Initializable {
             return new SimpleStringProperty(Integer.toString(jumlah));
         });
     }
-    private void applyTFsListeners() {
-        TextField[] tfs = {noFakturTF, noSalesmanTF, noLanggananTF, tanggalTF, statusTF};
+    private void applyListeners() {
+        // Major validation
+        TextField[] tfs = {noFakturTF, noSalesmanTF, noLanggananTF, tanggalTF};
         for (TextField tf : tfs) {
             tf.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
         }
+
+        // create a change listener to monitor the optional value
+        p.addListener((observable, oldValue, newValue) -> {
+            if (newValue.isPresent()) {
+                updateWhenPFound();
+            }
+        });
+
+        // Listen to tableView updates
+        tableView.getItems().addListener((ListChangeListener.Change<? extends PenjualanStock> change) -> {
+            while (change.next()) {
+                if (change.wasAdded() || change.wasRemoved() || change.wasReplaced()) {
+                    validateForm();
+
+                    NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
+                    totalText.setText(formatRupiah.format(Double.parseDouble(calculateJumlah())));
+                }
+            }
+        });
 
         // Listen to NoFaktur textfield
         List<Penjualan> penjualanList = penjualanDAO.get();
@@ -189,7 +205,6 @@ public class AddPenjualanController implements Initializable {
                 noSalesmanTF.setText("");
                 noLanggananTF.setText("");
                 tanggalTF.setText("");
-                statusTF.setText("");
                 return;
             };
 
@@ -201,20 +216,23 @@ public class AddPenjualanController implements Initializable {
                 noSalesmanTF.setText("");
                 noLanggananTF.setText("");
                 tanggalTF.setText("");
-                statusTF.setText("");
+                statusCB.getSelectionModel().selectFirst();
             }
 
             if (p.get().isPresent()) {
                 noSalesmanTF.setText(Integer.toString(p.get().get().getNoSalesman()));
                 noLanggananTF.setText(p.get().get().getNoLangganan());
                 tanggalTF.setText(p.get().get().getTanggal());
-                statusTF.setText(p.get().get().getStatus());
+                statusCB.getSelectionModel().select(p.get().get().getStatus());
 
             }
         }));
 
         noSalesmanTF.textProperty().addListener(((observableValue, s, t1) -> {
-            if (t1.isEmpty()) { return; }
+            if (t1.isEmpty()) {
+                salesman_namaText.setText("");
+                return;
+            }
             Optional<Salesman> salesman = salesDAO.find(Integer.parseInt(t1));
             if (salesman.isPresent()) {
                 salesman_namaText.setText(salesman.get().getNama());
@@ -222,15 +240,55 @@ public class AddPenjualanController implements Initializable {
                 salesman_namaText.setText("");
             }
         }));
+        // Salesman suggestion box
+        noSalesmanTF.textProperty().addListener((observableValue, s, t1) -> {
+            if (t1.isEmpty()) {
+                suggestionListView.getItems().clear();
+                return;
+            }
+            List<Salesman> arr = salesDAO.findByN(t1);
+            suggestionListView.getItems().clear();
+            for (Salesman salesman: arr) {
+                suggestionListView.getItems().add(salesman.toString());
+            }
+        });
 
         noLanggananTF.textProperty().addListener(((observableValue, s, t1) -> {
-            Optional<Langganan> l = langgananDAO.find(noLanggananTF.getText());
+            if (t1.isEmpty()) {
+                langganan_namaText.setText("");
+                return;
+            }
+            Optional<Langganan> l = langgananDAO.find(t1);
             if (l.isPresent()) {
                 langganan_namaText.setText(l.get().getNama());
             } else {
                 langganan_namaText.setText("");
             }
         }));
+        noLanggananTF.textProperty().addListener((observableValue, s, t1) -> {
+            if (t1.isEmpty()) {
+                suggestionListView.getItems().clear();
+                return;
+            }
+            List<Langganan> arr = langgananDAO.findByN(t1);
+            suggestionListView.getItems().clear();
+            for (Langganan l: arr) {
+                suggestionListView.getItems().add(l.toString());
+            }
+        });
+
+        suggestionListView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                System.out.println(suggestionListView.getSelectionModel().getSelectedItem());
+            }
+        });
+
+        // statusCB listener
+        statusCB.getSelectionModel().selectedItemProperty().addListener(
+                (observableValue, status, t1) -> {
+                    kreditHBox.setVisible(t1 == Status.K);
+                }
+        );
     }
     /**
      * Update the UI when Penjualan is found

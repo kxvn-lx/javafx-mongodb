@@ -59,6 +59,19 @@ public class SalesDAO {
         else return Optional.empty();
     }
 
+    public List<Salesman> findByN(String noSalesman) {
+        List<Salesman> arr = new ArrayList<>();
+
+        for (Salesman s : data) {
+            String numberAsString = String.valueOf(s.getNo_salesman());
+            if (numberAsString.contains(noSalesman)) {
+                arr.add(s);
+            }
+        }
+
+        return arr;
+    }
+
     private List<Salesman> fetchFromMongo() {
         List<Salesman> salesmanList = new ArrayList<>(
                 Arrays.asList(
