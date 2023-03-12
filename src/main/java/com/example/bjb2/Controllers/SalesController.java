@@ -44,7 +44,7 @@ public class SalesController implements Initializable {
     }
 
     // EVENT LISTENERS
-    public void handleTambahBtn(ActionEvent event) {
+    public void handleTambahBtn() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddSalesDialog.fxml"));
@@ -58,7 +58,11 @@ public class SalesController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                dao.add(c.getSales());
+                if (dao.add(c.getSales())) {
+                    System.out.println("ADD SALESMAN OK");
+                } else {
+                    System.out.println("ADD SALESMAN FAILED");
+                }
 
             }
 
@@ -67,7 +71,7 @@ public class SalesController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    public void handleRubahBtn(ActionEvent event) {
+    public void handleRubahBtn() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddSalesDialog.fxml"));
@@ -90,7 +94,11 @@ public class SalesController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                dao.update(index, c.getSales());
+                if (dao.update(index, c.getSales())) {
+                    System.out.println("UPDATE SALESMAN OK");
+                } else {
+                    System.out.println("UPDATE SALESMAN FAILED");
+                }
             }
 
 
@@ -98,7 +106,7 @@ public class SalesController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    public void handleHapusBtn(ActionEvent event) {
+    public void handleHapusBtn() {
         // Get the selection model
         TableView.TableViewSelectionModel<Salesman> selectionModel = tableView.getSelectionModel();
         // Get the selected item
@@ -111,7 +119,11 @@ public class SalesController implements Initializable {
         // show the dialog and wait for a response
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                dao.delete(selectedItem);
+                if (dao.delete(selectedItem)) {
+                    System.out.println("DELETE SALES OK");
+                } else {
+                    System.out.println("DELETE SALES FAILED");
+                }
             }
 
             tableView.getSelectionModel().clearSelection();

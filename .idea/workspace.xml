@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19cb7d07-3a2a-4ee5-b0bf-e32335f40234" name="Changes" comment="Code cleanup AddLanggananController">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/Connection/MongoDBConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/LanggananDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/LanggananDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/LanggananController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/LanggananController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/SalesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/SalesDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/Salesman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/Salesman.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddsalesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddsalesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/SalesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/SalesController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

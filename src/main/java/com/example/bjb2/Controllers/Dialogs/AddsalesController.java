@@ -20,6 +20,7 @@ public class AddsalesController implements Initializable {
     @FXML private DialogPane dialogPane;
     private Button okButton;
     @FXML private Text dialogTitle;
+    private Salesman salesman;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,12 +51,16 @@ public class AddsalesController implements Initializable {
     }
 
     public Salesman getSales() {
-        return new Salesman(namaTF.getText(), Integer.parseInt(noSalesmanTF.getText()), alamatTF.getText());
+        if (salesman == null) {
+            return new Salesman(namaTF.getText(), Integer.parseInt(noSalesmanTF.getText()), alamatTF.getText());
+        } else {
+            return new Salesman(salesman.getId(), namaTF.getText(), Integer.parseInt(noSalesmanTF.getText()), alamatTF.getText());
+        }
     }
 
     public void setTFs(Salesman sales) {
         dialogTitle.setText("Rubah Salesman");
-
+        salesman = sales;
         noSalesmanTF.setText( Integer.toString(sales.getNo_salesman()));
         namaTF.setText(sales.getNama());
         alamatTF.setText(sales.getAlamat());
