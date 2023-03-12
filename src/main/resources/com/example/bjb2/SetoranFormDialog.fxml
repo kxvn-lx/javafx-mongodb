@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<DialogPane fx:id="dialogPane" headerText="Formulir Data Setoran Penjualan" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.Dialogs.SetoranFormController">
+   <content>
+      <VBox prefHeight="400.0" prefWidth="800.0" spacing="25.0">
+         <children>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.3186950683594" minWidth="10.0" prefWidth="123.33619689941406" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="654.6638031005859" minWidth="10.0" prefWidth="654.6638031005859" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Faktur" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No. Langganan" GridPane.rowIndex="1" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tanggal" GridPane.rowIndex="2" />
+                  <TextField fx:id="noFakturTF" maxWidth="100.0" minWidth="-Infinity" GridPane.columnIndex="1" />
+                  <TextField fx:id="tanggalTF" maxWidth="100.0" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="25.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Text fx:id="noLanggananText" strokeType="OUTSIDE" strokeWidth="0.0" text="noLangganan" />
+                        <Text fx:id="namaLanggananText" strokeType="OUTSIDE" strokeWidth="0.0" text="namaLangganan" />
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="396.3186950683594" minWidth="10.0" prefWidth="123.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="687.1361541748047" minWidth="10.0" prefWidth="655.5373687744141" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Jumlah Setoran" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total Pembelian" GridPane.rowIndex="1" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sisa" GridPane.rowIndex="2" />
+                  <Text fx:id="setoranText" strokeType="OUTSIDE" strokeWidth="0.0" text="Rp.000.000,00" GridPane.columnIndex="1" />
+                  <Text fx:id="jumlahDepositText" strokeType="OUTSIDE" strokeWidth="0.0" text="Rp.000.000,00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Text fx:id="sisaText" strokeType="OUTSIDE" strokeWidth="0.0" text="Rp.0,00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.3186950683594" minWidth="10.0" prefWidth="123.37925720214844" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="654.6207427978516" minWidth="10.0" prefWidth="654.6207427978516" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Setor Sekarang" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sisa" GridPane.rowIndex="1" />
+                  <TextField fx:id="setorSekarangTF" maxWidth="100.0" minWidth="-Infinity" GridPane.columnIndex="1" />
+                  <Text fx:id="sisaSetorSekarangText" strokeType="OUTSIDE" strokeWidth="0.0" text="Rp.0,00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

@@ -2,17 +2,27 @@ package com.example.bjb2.Controllers;
 
 import com.example.Database.DAO.PenjualanDAO;
 import com.example.Database.Penjualan;
+import com.example.bjb2.Controllers.Dialogs.AddPenjualanController;
+import com.example.bjb2.Controllers.Dialogs.SetoranFormController;
 import com.example.bjb2.Models.Model;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Pos;
+import javafx.scene.SubScene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -25,21 +35,48 @@ public class SetoranController implements Initializable {
     private final PenjualanDAO dao = new PenjualanDAO();
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTVCellValueFactory();
         getNotPaid();
-
+        // Setup listener whenever user went to Setoran screen
         Model.getInstance().getVF().getClientSelectedMenuItem().addListener((observableValue, oldVal, newVal) -> {
             if (newVal.equals("Setoran")) {
                 getNotPaid();
             }
         });
+        setupContextMenu();
+        applyListeners();
     }
 
     public void handleRubahBtn() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/SetoranFormDialog.fxml"));
+            DialogPane pane = fxmlLoader.load();
+            pane.setHeaderText("Form Data Setoran Penjualan");
 
+            SetoranFormController c = fxmlLoader.getController();
+            // Get the selection model
+            TableView.TableViewSelectionModel<Penjualan> selectionModel = tableView.getSelectionModel();
+            // Get the selected item
+            Penjualan selectedItem = selectionModel.getSelectedItem();
+            int index = selectionModel.getSelectedIndex();
+
+            c.setTFs(selectedItem);
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            dialog.setTitle("Form Data Setoran Penjualan");
+
+            tableView.getSelectionModel().clearSelection();
+            Optional<ButtonType> clickedButton = dialog.showAndWait();
+            if (clickedButton.get() == ButtonType.OK) {
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setupTVCellValueFactory() {
@@ -55,5 +92,26 @@ public class SetoranController implements Initializable {
                 .collect(Collectors.toList());
 
         tableView.getItems().setAll(notPaidList);
+    }
+    private void setupContextMenu() {
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem menuItem1 = new MenuItem("Deselect");
+        menuItem1.setOnAction(event -> {
+            tableView.getSelectionModel().clearSelection();
+        });
+        contextMenu.getItems().addAll(menuItem1);
+
+        tableView.setContextMenu(contextMenu);
+        tableView.setOnContextMenuRequested(event -> {
+            contextMenu.show(tableView, event.getScreenX(), event.getScreenY());
+        });
+    }
+    private void applyListeners() {
+        // Listen to selected row
+        TableView.TableViewSelectionModel<Penjualan> selectionModel = tableView.getSelectionModel();
+        // Add a listener to the selection model
+        selectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            rubahBtn.setDisable(newValue == null);
+        });
     }
 }
