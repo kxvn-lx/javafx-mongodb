@@ -18,7 +18,6 @@ public class Salesman {
         this.no_salesman = no_salesman;
         this.nama = nama;
     }
-
     /**
      * @param nama Salesman pe nama
      * @param no_salesman nomor salesman
@@ -38,28 +37,21 @@ public class Salesman {
     public ObjectId getId() {
         return id;
     }
-
     public int getNo_salesman() {
         return no_salesman;
     }
-
     public String getNama() {
         return nama;
     }
-
     public String getAlamat() {
         return alamat;
     }
-
-
     public void setNo_salesman(int no_salesman) {
         this.no_salesman = no_salesman;
     }
-
     public void setNama(String nama) {
         this.nama = nama;
     }
-
     public void setAlamat(String alamat) {
         this.alamat = alamat;
     }

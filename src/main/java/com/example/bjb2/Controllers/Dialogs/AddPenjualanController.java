@@ -4,6 +4,7 @@ import com.example.Database.*;
 import com.example.Database.DAO.LanggananDAO;
 import com.example.Database.DAO.PenjualanDAO;
 import com.example.Database.DAO.SalesDAO;
+import com.example.Utils.DateGenerator;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -65,6 +66,9 @@ public class AddPenjualanController implements Initializable {
         assert latestPenjualan != null;
         noFakturTF.setText(Integer.toString(latestPenjualan.getNoFaktur() + 1));
 
+        // Set to today's date
+        tanggalTF.setText(DateGenerator.getCurrentDate());
+
         // Status Choice Box
         statusCB.getItems().setAll(Status.values());
         statusCB.getSelectionModel().selectFirst();
@@ -86,11 +90,9 @@ public class AddPenjualanController implements Initializable {
             dialog.setTitle("Form Barang Terjual");
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
-            if (clickedButton.get() == ButtonType.OK)  {
+            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.OK) {
                 tableView.getItems().add(c.getPenjualanStock());
             }
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -225,18 +227,18 @@ public class AddPenjualanController implements Initializable {
             if (noFakturTF.getText().isEmpty()) {
                 noSalesmanTF.setText("");
                 noLanggananTF.setText("");
-                tanggalTF.setText("");
+                tanggalTF.setText(DateGenerator.getCurrentDate());
                 return;
             };
 
             List<Penjualan> filtered = penjualanList.stream()
                     .filter(penjualan -> penjualan.getNoFaktur() == Integer.parseInt(noFakturTF.getText()))
                     .collect(Collectors.toList());
-            if (filtered.size() != 0) optionalPenjualan.setValue(Optional.ofNullable(filtered.get(0)));
+            if (!filtered.isEmpty()) optionalPenjualan.setValue(Optional.ofNullable(filtered.get(0)));
             else {
                 noSalesmanTF.setText("");
                 noLanggananTF.setText("");
-                tanggalTF.setText("");
+                tanggalTF.setText(DateGenerator.getCurrentDate());
                 statusCB.getSelectionModel().selectFirst();
             }
 

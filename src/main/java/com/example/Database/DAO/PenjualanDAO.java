@@ -81,24 +81,23 @@ public class PenjualanDAO {
                 )
         );
 
-        List<Penjualan> list = new ArrayList<>(
-                Arrays.asList(
-                    new Penjualan(10500
-                            , 1,
-                            "MTH202",
-                            new Date().toString(),
-                            Status.C,
-                            new PenjualanStock[]{
-                                new PenjualanStock(stocks.get(0), 2),
-                                    new PenjualanStock(stocks.get(1), 5),
-                                    new PenjualanStock(stocks.get(2), 10),
-                                    new PenjualanStock(stocks.get(3), 1),
-                            },
-                            7619000,
-                            0
-                    )
+        return new ArrayList<>(
+                List.of(
+                        new Penjualan(10500
+                                , 1,
+                                "MTH202",
+                                new Date().toString(),
+                                Status.C,
+                                new PenjualanStock[]{
+                                        new PenjualanStock(stocks.get(0), 2),
+                                        new PenjualanStock(stocks.get(1), 5),
+                                        new PenjualanStock(stocks.get(2), 10),
+                                        new PenjualanStock(stocks.get(3), 1),
+                                },
+                                7619000,
+                                0
+                        )
                 )
         );
-        return list;
     }
 }

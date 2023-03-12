@@ -15,15 +15,12 @@ public class PenjualanStock {
     public Stock getStock() {
         return stock;
     }
-
     public void setStock(Stock stock) {
         this.stock = stock;
     }
-
     public Integer getQty() {
         return qty;
     }
-
     public void setQty(Integer qty) {
         this.qty = qty;
     }

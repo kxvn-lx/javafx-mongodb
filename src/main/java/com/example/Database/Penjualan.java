@@ -27,7 +27,6 @@ public class Penjualan {
         this.jumlah = jumlah;
         this.setoran = setoran;
     }
-
     public Penjualan(ObjectId id, Integer noFaktur, Integer noSalesman, String noLangganan, String tanggal, Status status, PenjualanStock[] pjs) {
         this.id = id;
         this.noFaktur = noFaktur;
@@ -41,51 +40,39 @@ public class Penjualan {
     public Integer getNoFaktur() {
         return noFaktur;
     }
-
     public void setNoFaktur(Integer noFaktur) {
         this.noFaktur = noFaktur;
     }
-
     public Integer getNoSalesman() {
         return noSalesman;
     }
-
     public void setSalesman(Salesman salesman) {
         this.noSalesman = noSalesman;
     }
-
     public String getNoLangganan() {
         return noLangganan;
     }
-
     public void setLangganan(String noLangganan) {
         this.noLangganan = noLangganan;
     }
-
     public String getTanggal() {
         return tanggal;
     }
-
     public void setTanggal(String tanggal) {
         this.tanggal = tanggal;
     }
-
     public Status getStatus() {
         return status;
     }
-
     public void setStatus(Status status) {
         this.status = status;
     }
-
     public PenjualanStock[] getPjs() {
         return pjs;
     }
-
     public void setPenjualanStock(PenjualanStock[] pjs) {
         this.pjs = pjs;
     }
-
     public int getJumlah() { return jumlah; }
     public void setJumlah(int jumlah) { this.jumlah = jumlah; }
     public int getSetoran() { return setoran; }
