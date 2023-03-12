@@ -45,7 +45,7 @@ public class AddPenjualanController implements Initializable {
     private PenjualanDAO penjualanDAO;
     private SalesDAO salesDAO;
     private LanggananDAO langgananDAO;
-    private final ObjectProperty<Optional<Penjualan>> p = new SimpleObjectProperty<>(Optional.empty());;
+    private final ObjectProperty<Optional<Penjualan>> optionalPenjualan = new SimpleObjectProperty<>(Optional.empty());;
     private final NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
 
     @Override
@@ -149,7 +149,7 @@ public class AddPenjualanController implements Initializable {
     }
     public Penjualan getPenjualan() {
         List<PenjualanStock> pjs = tableView.getItems();
-        int s = p.get().isPresent() ? p.get().get().getSetoran() : 0;
+        int s = optionalPenjualan.get().isPresent() ? optionalPenjualan.get().get().getSetoran() : 0;
         return new Penjualan(
                 Integer.parseInt(noFakturTF.getText()),
                 Integer.parseInt(noSalesmanTF.getText()),
@@ -164,7 +164,7 @@ public class AddPenjualanController implements Initializable {
     public void setTFs(Penjualan p) {
         dialogPane.setHeaderText("Rubah Penjualan");
 
-        this.p.setValue(Optional.of(p));
+        this.optionalPenjualan.setValue(Optional.of(p));
 
         noFakturTF.setText(Integer.toString(p.getNoFaktur()));
         noSalesmanTF.setText(Integer.toString(p.getNoSalesman()));
@@ -182,7 +182,7 @@ public class AddPenjualanController implements Initializable {
         hargaCol.setCellValueFactory(cd -> new SimpleStringProperty(Integer.toString(cd.getValue().getStock().getHarga())));
         jumlahCol.setCellValueFactory(cd -> {
             PenjualanStock pj = cd.getValue();
-            Integer jumlah = pj.getStock().getHarga() * pj.getQty();
+            int jumlah = pj.getStock().getHarga() * pj.getQty();
             return new SimpleStringProperty(Integer.toString(jumlah));
         });
     }
@@ -194,7 +194,7 @@ public class AddPenjualanController implements Initializable {
         }
 
         // create a change listener to monitor the optional value
-        p.addListener((observable, oldValue, newValue) -> {
+        optionalPenjualan.addListener((observable, oldValue, newValue) -> {
             if (newValue.isPresent()) {
                 updateWhenPFound();
             }
@@ -232,7 +232,7 @@ public class AddPenjualanController implements Initializable {
             List<Penjualan> filtered = penjualanList.stream()
                     .filter(penjualan -> penjualan.getNoFaktur() == Integer.parseInt(noFakturTF.getText()))
                     .collect(Collectors.toList());
-            if (filtered.size() != 0) p.setValue(Optional.ofNullable(filtered.get(0)));
+            if (filtered.size() != 0) optionalPenjualan.setValue(Optional.ofNullable(filtered.get(0)));
             else {
                 noSalesmanTF.setText("");
                 noLanggananTF.setText("");
@@ -240,11 +240,11 @@ public class AddPenjualanController implements Initializable {
                 statusCB.getSelectionModel().selectFirst();
             }
 
-            if (p.get().isPresent()) {
-                noSalesmanTF.setText(Integer.toString(p.get().get().getNoSalesman()));
-                noLanggananTF.setText(p.get().get().getNoLangganan());
-                tanggalTF.setText(p.get().get().getTanggal());
-                statusCB.getSelectionModel().select(p.get().get().getStatus());
+            if (optionalPenjualan.get().isPresent()) {
+                noSalesmanTF.setText(Integer.toString(optionalPenjualan.get().get().getNoSalesman()));
+                noLanggananTF.setText(optionalPenjualan.get().get().getNoLangganan());
+                tanggalTF.setText(optionalPenjualan.get().get().getTanggal());
+                statusCB.getSelectionModel().select(optionalPenjualan.get().get().getStatus());
 
             }
         }));
@@ -323,15 +323,16 @@ public class AddPenjualanController implements Initializable {
         );
     }
     /**
-     * Update the UI when Penjualan is found
+     * Update the UI when Penjualan is found after typing on NoFaktur
      */
     private void updateWhenPFound() {
-        Optional<Salesman> s = salesDAO.find(p.get().get().getNoSalesman());
+        Optional<Salesman> s = salesDAO.find(optionalPenjualan.get().get().getNoSalesman());
         salesman_namaText.setText(s.get().getNama());
 
-        Optional<Langganan> l = langgananDAO.find(p.get().get().getNoLangganan());
+        Optional<Langganan> l = langgananDAO.find(optionalPenjualan.get().get().getNoLangganan());
         langganan_namaText.setText(l.get().getNama());
 
+        tableView.getItems().setAll(optionalPenjualan.get().get().getPjs());
     }
     private int calculateJumlah() {
         int sum = 0;

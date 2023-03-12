@@ -34,19 +34,19 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nama:" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                <children>
-                  <Text fx:id="namaText" strokeType="OUTSIDE" strokeWidth="0.0" text="PE ROL 5 KG" />
-                  <Text fx:id="merekText" strokeType="OUTSIDE" strokeWidth="0.0" text="BAJA" />
+                  <Text fx:id="namaText" strokeType="OUTSIDE" strokeWidth="0.0" text="Tidak ada informasi." />
+                  <Text fx:id="merekText" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
                </children>
             </HBox>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Qty:" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <children>
                   <TextField fx:id="qtyTF" prefHeight="26.0" prefWidth="59.0" />
-                  <Text fx:id="satuanText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text fx:id="satuanText" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
                </children>
             </HBox>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Harga:" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
-            <Text fx:id="hargaText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Text fx:id="hargaText" strokeType="OUTSIDE" strokeWidth="0.0" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </content>

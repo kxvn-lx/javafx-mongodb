@@ -15,7 +15,7 @@ public class PenjualanDAO {
         if (data.isEmpty()) data.setAll(fetchFromMongo());
     }
 
-    public void addListener(TableView tv) {
+    public void addListener(TableView<Penjualan> tv) {
         data.addListener((ListChangeListener<Penjualan>) c -> {
             while(c.next()) {
                 if (c.wasAdded()) {
@@ -30,6 +30,11 @@ public class PenjualanDAO {
         });
     }
     public void add(Penjualan s) {
+        if (!data.contains(s)) {
+            update(s);
+            return;
+        }
+
         data.add(s);
     }
     public ObservableList<Penjualan> get() {
@@ -49,7 +54,9 @@ public class PenjualanDAO {
             Penjualan updatedPenjualan = penjualanToUpdate.get();
             // Notify the list that the Penjualan object has been updated
             int index = data.indexOf(penjualanToUpdate.get());
-            data.set(index, updatedPenjualan);
+            data.set(index, p);
+        } else {
+            System.out.println("NOTHING TO UPDATE");
         }
     }
     public void delete(Penjualan s) {
