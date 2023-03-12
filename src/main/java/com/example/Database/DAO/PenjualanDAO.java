@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PenjualanDAO {
     private static final ObservableList<Penjualan> data = FXCollections.observableArrayList();
@@ -30,7 +31,15 @@ public class PenjualanDAO {
         });
     }
     public void add(Penjualan s) {
-        if (!data.contains(s)) {
+        // Create a new List called 'p' to hold the filtered Penjualan objects
+        List<Penjualan> p = data.stream()
+                // Use the filter() method to keep only Penjualan objects with a matching NoFaktur value
+                .filter(penjualan -> Objects.equals(penjualan.getNoFaktur(), s.getNoFaktur()))
+                // Collect the filtered Penjualan objects into a new List using the collect() method
+                .collect(Collectors.toList());
+
+        // If any Penjualan objects were found in the filtered List, update the first one and return
+        if (p.size() > 0) {
             update(s);
             return;
         }

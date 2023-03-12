@@ -86,7 +86,7 @@ public class AddPenjualanController implements Initializable {
             dialog.setTitle("Form Barang Terjual");
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
-            if (clickedButton.get() == ButtonType.OK) {
+            if (clickedButton.get() == ButtonType.OK)  {
                 tableView.getItems().add(c.getPenjualanStock());
             }
 
