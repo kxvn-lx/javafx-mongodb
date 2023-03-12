@@ -25,7 +25,7 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.set;
 
 public class SalesDAO {
-    private MongoDBConnection co = new MongoDBConnection("entity", "salesman");
+    private final MongoDBConnection co = new MongoDBConnection("entity", "salesman");
     private static final ObservableList<Salesman> data = FXCollections.observableArrayList();
 
     public SalesDAO() {

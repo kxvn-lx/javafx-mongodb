@@ -1,13 +1,7 @@
 package com.example.Database.Connection;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.ServerApi;
-import com.mongodb.ServerApiVersion;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.*;
+import com.mongodb.client.*;
 import org.bson.Document;
 
 public class MongoDBConnection {
@@ -30,9 +24,6 @@ public class MongoDBConnection {
         this.collectionName = collectionName;
     }
 
-    public MongoDatabase getDatabase() {
-        return mongoClient.getDatabase(dbName);
-    }
     public MongoCollection<Document> getCollection() {
         MongoDatabase database = mongoClient.getDatabase(dbName);
         return database.getCollection(collectionName);
