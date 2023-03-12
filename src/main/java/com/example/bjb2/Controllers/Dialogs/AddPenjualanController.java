@@ -149,10 +149,12 @@ public class AddPenjualanController implements Initializable {
     }
     public Penjualan getPenjualan() {
         List<PenjualanStock> pjs = tableView.getItems();
-        return new Penjualan(Integer.parseInt(noFakturTF.getText()), Integer.parseInt(noSalesmanTF.getText()), noLanggananTF.getText().toUpperCase(), tanggalTF.getText(), statusCB.getValue(), pjs.toArray(new PenjualanStock[0]), calculateJumlah());
+        return new Penjualan(Integer.parseInt(noFakturTF.getText()), Integer.parseInt(noSalesmanTF.getText()), noLanggananTF.getText().toUpperCase(), tanggalTF.getText(), statusCB.getValue(), pjs.toArray(new PenjualanStock[0]), calculateJumlah(), p.get().get().getSetoran());
     }
     public void setTFs(Penjualan p) {
         dialogPane.setHeaderText("Rubah Penjualan");
+
+        this.p.setValue(Optional.of(p));
 
         noFakturTF.setText(Integer.toString(p.getNoFaktur()));
         noSalesmanTF.setText(Integer.toString(p.getNoSalesman()));

@@ -17,7 +17,7 @@ public class Penjualan {
     private Integer jumlah;
     private Integer setoran;
 
-    public Penjualan(Integer noFaktur, Integer noSalesman, String noLangganan, String tanggal, Status status, PenjualanStock[] pjs, Integer jumlah) {
+    public Penjualan(Integer noFaktur, Integer noSalesman, String noLangganan, String tanggal, Status status, PenjualanStock[] pjs, Integer jumlah, Integer setoran) {
         this.noFaktur = noFaktur;
         this.noSalesman = noSalesman;
         this.noLangganan = noLangganan;
@@ -25,7 +25,7 @@ public class Penjualan {
         this.status = status;
         this.pjs = pjs;
         this.jumlah = jumlah;
-        this.setoran = 0;
+        this.setoran = setoran;
     }
 
     public Penjualan(ObjectId id, Integer noFaktur, Integer noSalesman, String noLangganan, String tanggal, Status status, PenjualanStock[] pjs) {
@@ -89,7 +89,7 @@ public class Penjualan {
     public int getJumlah() { return jumlah; }
     public void setJumlah(int jumlah) { this.jumlah = jumlah; }
     public int getSetoran() { return setoran; }
-    public void setSetoran(int setoran) { this.setoran = setoran; }
+    public void setSetoran(int setoran) { this.setoran += setoran; }
 
     @Override
     public String toString() {

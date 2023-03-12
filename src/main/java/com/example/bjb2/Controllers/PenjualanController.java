@@ -9,6 +9,7 @@ import com.example.Database.Stock;
 import com.example.bjb2.Controllers.Dialogs.AddPenjualanController;
 import com.example.bjb2.Controllers.Dialogs.AddPenjualanStockController;
 import com.example.bjb2.Controllers.Dialogs.AddStockController;
+import com.example.bjb2.Models.Model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,6 +39,12 @@ public class PenjualanController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dao = new PenjualanDAO();
         dao.addListener(tableView);
+
+        Model.getInstance().getVF().getClientSelectedMenuItem().addListener((observableValue, oldVal, newVal) -> {
+            if (newVal.equals("Penjualan")) {
+                tableView.refresh();
+            }
+        });
 
         noFakturCol.setCellValueFactory(new PropertyValueFactory<>("noFaktur"));
         noSalesmanCol.setCellValueFactory(cd -> new SimpleStringProperty(Integer.toString(cd.getValue().getNoSalesman())));

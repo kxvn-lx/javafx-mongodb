@@ -8,8 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/PenjualanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/PenjualanDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/Penjualan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/Penjualan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/SetoranFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/SetoranFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/SetoranController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/SetoranController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddPenjualanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/AddPenjualanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/PenjualanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/PenjualanController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
