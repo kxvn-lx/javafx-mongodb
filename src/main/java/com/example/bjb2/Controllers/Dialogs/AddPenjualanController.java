@@ -149,7 +149,17 @@ public class AddPenjualanController implements Initializable {
     }
     public Penjualan getPenjualan() {
         List<PenjualanStock> pjs = tableView.getItems();
-        return new Penjualan(Integer.parseInt(noFakturTF.getText()), Integer.parseInt(noSalesmanTF.getText()), noLanggananTF.getText().toUpperCase(), tanggalTF.getText(), statusCB.getValue(), pjs.toArray(new PenjualanStock[0]), calculateJumlah(), p.get().get().getSetoran());
+        int s = p.get().isPresent() ? p.get().get().getSetoran() : 0;
+        return new Penjualan(
+                Integer.parseInt(noFakturTF.getText()),
+                Integer.parseInt(noSalesmanTF.getText()),
+                noLanggananTF.getText().toUpperCase(),
+                tanggalTF.getText(),
+                statusCB.getValue(),
+                pjs.toArray(new PenjualanStock[0]),
+                calculateJumlah(),
+                s
+        );
     }
     public void setTFs(Penjualan p) {
         dialogPane.setHeaderText("Rubah Penjualan");
@@ -281,6 +291,8 @@ public class AddPenjualanController implements Initializable {
                 suggestionListView.getItems().clear();
                 return;
             }
+
+
             List<Langganan> arr = langgananDAO.findByN(t1);
             suggestionListView.getItems().clear();
             for (Langganan l: arr) {
@@ -292,19 +304,22 @@ public class AddPenjualanController implements Initializable {
             if (t1 == null) { return; }
             if (t1 instanceof Salesman) {
                 Salesman s = (Salesman) t1;
-                noSalesmanTF.setText(Integer.toString(s.getNo_salesman()));
+                if (!noSalesmanTF.getText().equals(Integer.toString(s.getNo_salesman()))) {
+                    noSalesmanTF.setText(Integer.toString(s.getNo_salesman()));
+                }
             } else if (t1 instanceof Langganan) {
                 Langganan l = (Langganan) t1;
-                noLanggananTF.setText(l.getNo_langganan());
+                if (!noLanggananTF.getText().equals(l.getNo_langganan())) {
+                    noLanggananTF.setText(l.getNo_langganan());
+                }
             }
             suggestionListView.getItems().clear();
+            suggestionListView.setFocusTraversable(false);
         });
 
         // statusCB listener
         statusCB.getSelectionModel().selectedItemProperty().addListener(
-                (observableValue, status, t1) -> {
-                    kreditHBox.setVisible(t1 == Status.K);
-                }
+                (observableValue, status, t1) -> kreditHBox.setVisible(t1 == Status.K)
         );
     }
     /**
