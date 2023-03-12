@@ -1,7 +1,6 @@
 package com.example.Database.DAO;
 
 import com.example.Database.Langganan;
-import com.example.Database.Salesman;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -20,7 +19,7 @@ public class LanggananDAO {
         if (data.isEmpty()) data.setAll(fetchFromMongo());
     }
 
-    public void addListener(TableView tv) {
+    public void addListener(TableView<Langganan> tv) {
         data.addListener((ListChangeListener<Langganan>) c -> {
             while(c.next()) {
                 if (c.wasAdded()) {
@@ -38,17 +37,28 @@ public class LanggananDAO {
     public void add(Langganan s) {
         data.add(s);
     }
-
     public ObservableList<Langganan> get() {
         return data;
     }
-
     public void update(int index, Langganan s) {
         data.set(index, s);
     }
-
     public void delete(Langganan s) {
         data.remove(s);
+    }
+    public List<Langganan> findByN(String noLangganan) {
+        List<Langganan> arr = new ArrayList<>();
+
+        for (Langganan l : data) { if (l.getNo_langganan().contains(noLangganan.toUpperCase())) arr.add(l); }
+        return arr;
+    }
+    public Optional<Langganan> find(String noLangganan) {
+        List<Langganan> l = data.stream()
+                .filter(langganan -> langganan.getNo_langganan().equals(noLangganan.toUpperCase()))
+                .collect(Collectors.toList());
+
+        if (l.size() > 0) return Optional.of(l.get(0));
+        else return Optional.empty();
     }
 
     private List<Langganan> fetchFromMongo() {
@@ -62,19 +72,4 @@ public class LanggananDAO {
         return list;
     }
 
-    public List<Langganan> findByN(String noLangganan) {
-        List<Langganan> arr = new ArrayList<>();
-
-        for (Langganan l : data) { if (l.getNo_langganan().contains(noLangganan.toUpperCase())) arr.add(l); }
-        return arr;
-    }
-
-    public Optional<Langganan> find(String noLangganan) {
-        List<Langganan> l = data.stream()
-                .filter(langganan -> langganan.getNo_langganan().equals(noLangganan.toUpperCase()))
-                .collect(Collectors.toList());
-
-        if (l.size() > 0) return Optional.of(l.get(0));
-        else return Optional.empty();
-    }
 }

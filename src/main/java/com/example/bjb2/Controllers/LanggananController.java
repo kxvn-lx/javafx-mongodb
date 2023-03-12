@@ -39,7 +39,7 @@ public class LanggananController implements Initializable {
     }
 
     /* EVENT LISTENERS */
-    public void handleTambahBtn(ActionEvent event) {
+    public void handleTambahBtn() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddLanggananDialog.fxml"));
@@ -61,7 +61,7 @@ public class LanggananController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    public void handleRubahBtn(ActionEvent event) {
+    public void handleRubahBtn() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddLanggananDialog.fxml"));
@@ -90,7 +90,7 @@ public class LanggananController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    public void handleHapusBtn(ActionEvent event) {
+    public void handleHapusBtn() {
         // Get the selection model
         TableView.TableViewSelectionModel<Langganan> selectionModel = tableView.getSelectionModel();
         // Get the selected item
