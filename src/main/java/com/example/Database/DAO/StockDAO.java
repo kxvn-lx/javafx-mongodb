@@ -1,5 +1,6 @@
 package com.example.Database.DAO;
 
+import com.example.Database.Salesman;
 import com.example.Database.Stock;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -10,13 +11,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class StockDAO {
-    private final ObservableList<Stock> data = FXCollections.observableArrayList();
-
-    public StockDAO() {
-        data.setAll(fetchFromMongo());
-    }
+    private static final ObservableList<Stock> data = FXCollections.observableArrayList();
+    public StockDAO() { if (data.isEmpty()) data.setAll(fetchFromMongo()); }
 
     public void addListener(TableView tv) {
         data.addListener((ListChangeListener<Stock>) c -> {
@@ -42,12 +41,12 @@ public class StockDAO {
     }
 
     public Optional<Stock> find(String kdStock) {
-        for (Stock s : data) {
-            if (s.getKode().equals(kdStock.toUpperCase())) {
-                return Optional.of(s);
-            }
-        }
-    return null;
+        List<Stock> l = data.stream()
+                .filter(stock -> stock.getKode().equals(kdStock.toUpperCase()))
+                .collect(Collectors.toList());
+
+        if (l.size() > 0) return Optional.of(l.get(0));
+        else return Optional.empty();
     }
 
     public void update(int index, Stock s) {

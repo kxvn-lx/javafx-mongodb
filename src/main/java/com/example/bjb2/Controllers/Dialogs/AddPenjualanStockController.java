@@ -3,18 +3,20 @@ package com.example.bjb2.Controllers.Dialogs;
 import com.example.Database.DAO.StockDAO;
 import com.example.Database.PenjualanStock;
 import com.example.Database.Stock;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import static com.example.bjb2.HelloApplication.print;
 
 public class AddPenjualanStockController implements Initializable {
     @FXML private DialogPane dialogPane;
@@ -29,8 +31,12 @@ public class AddPenjualanStockController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dialogPane.lookupButton(ButtonType.OK).setDisable(true);
         stockDAO = new StockDAO();
+        dialogPane.lookupButton(ButtonType.OK).setDisable(true);
+        dialogPane.sceneProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) { return; }
+            listView.setItems(stockDAO.get());
+        });
 
         applyTFsListeners();
         setupSuggestionsTF();
@@ -38,8 +44,7 @@ public class AddPenjualanStockController implements Initializable {
 
     public PenjualanStock getPenjualanStock() {
         if (stockDAO.find(kdStockTF.getText()).isPresent()) {
-            PenjualanStock pj = new PenjualanStock(stockDAO.find(kdStockTF.getText()).get(), Integer.parseInt(qtyTF.getText()));
-            return pj;
+            return new PenjualanStock(stockDAO.find(kdStockTF.getText()).get(), Integer.parseInt(qtyTF.getText()));
         } else {
             throw new RuntimeException();
         }

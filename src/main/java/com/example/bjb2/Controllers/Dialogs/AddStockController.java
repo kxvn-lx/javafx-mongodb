@@ -35,7 +35,7 @@ public class AddStockController implements Initializable {
 
 
     public Stock getStock() {
-        return new Stock(kodeTF.getText(), namaTF.getText(), merekTF.getText(), Integer.parseInt(hargaTF.getText()), satuanTF.getText());
+        return new Stock(kodeTF.getText().toUpperCase(), namaTF.getText(), merekTF.getText(), Integer.parseInt(hargaTF.getText()), satuanTF.getText());
     }
 
     public boolean isNull() {

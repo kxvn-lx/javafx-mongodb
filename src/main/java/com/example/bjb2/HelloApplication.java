@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+    public static void print(Object o) {
+        System.out.println(o);
+    }
     @Override
     public void start(Stage stage) {
         Model.getInstance().getVF().showClientWindow();

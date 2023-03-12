@@ -19,7 +19,7 @@ public class SalesDAO {
         if (data.isEmpty()) data.setAll(fetchFromMongo());
     }
 
-    public void addListener(TableView tv) {
+    public void addListener(TableView<Salesman> tv) {
         data.addListener((ListChangeListener<Salesman>) c -> {
             while(c.next()) {
                 if (c.wasAdded()) {

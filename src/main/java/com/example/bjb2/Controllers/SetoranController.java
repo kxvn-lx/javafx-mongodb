@@ -93,6 +93,13 @@ public class SetoranController implements Initializable {
 
         tableView.getItems().setAll(notPaidList);
     }
+    private void getPaid() {
+        List<Penjualan> allList = dao.get();
+        List<Penjualan> paidList = allList.stream()
+                .filter(penjualan -> penjualan.getJumlah() == penjualan.getSetoran() || penjualan.getSetoran() >= penjualan.getJumlah())
+                .collect(Collectors.toList());
+        tableView.getItems().setAll(paidList);
+    }
     private void setupContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem menuItem1 = new MenuItem("Deselect");
