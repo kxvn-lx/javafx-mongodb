@@ -38,18 +38,6 @@ public class Penjualan {
         this.pjs = pjs;
     }
 
-    @Override
-    public String toString() {
-        return "Penjualan{" +
-                "noFaktur=" + noFaktur +
-                ", salesman=" + noSalesman +
-                ", langganan=" + noLangganan +
-                ", tanggal=" + tanggal +
-                ", status=" + status +
-                ", PenjualanStocks=" + Arrays.toString(pjs) +
-                '}';
-    }
-
     public Integer getNoFaktur() {
         return noFaktur;
     }
@@ -102,4 +90,18 @@ public class Penjualan {
     public void setJumlah(int jumlah) { this.jumlah = jumlah; }
     public int getSetoran() { return setoran; }
     public void setSetoran(int setoran) { this.setoran = setoran; }
+
+    @Override
+    public String toString() {
+        return "Penjualan{" +
+                "noFaktur=" + noFaktur +
+                ", noSalesman=" + noSalesman +
+                ", noLangganan='" + noLangganan + '\'' +
+                ", tanggal='" + tanggal + '\'' +
+                ", status=" + status +
+                ", pjs=" + pjs.length +
+                ", jumlah=" + jumlah +
+                ", setoran=" + setoran +
+                '}';
+    }
 }

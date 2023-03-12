@@ -61,7 +61,6 @@ public class SetoranController implements Initializable {
             TableView.TableViewSelectionModel<Penjualan> selectionModel = tableView.getSelectionModel();
             // Get the selected item
             Penjualan selectedItem = selectionModel.getSelectedItem();
-            int index = selectionModel.getSelectedIndex();
 
             c.setTFs(selectedItem);
 
@@ -72,7 +71,8 @@ public class SetoranController implements Initializable {
             tableView.getSelectionModel().clearSelection();
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-
+                dao.update(c.getUpdatedPenjualan());
+                getNotPaid();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

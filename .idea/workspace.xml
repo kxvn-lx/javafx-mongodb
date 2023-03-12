@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19cb7d07-3a2a-4ee5-b0bf-e32335f40234" name="Changes" comment="Code cleanup AddLanggananController">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/SetoranFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/PenjualanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/DAO/PenjualanDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Database/Penjualan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Database/Penjualan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/SetoranFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/Dialogs/SetoranFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/SetoranController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/bjb2/Controllers/SetoranController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Setoran.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/bjb2/Setoran.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

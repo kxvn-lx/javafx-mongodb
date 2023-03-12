@@ -6,10 +6,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class PenjualanDAO {
     private static final ObservableList<Penjualan> data = FXCollections.observableArrayList();
@@ -32,23 +29,32 @@ public class PenjualanDAO {
             }
         });
     }
-
     public void add(Penjualan s) {
         data.add(s);
     }
-
     public ObservableList<Penjualan> get() {
         return data;
     }
-
     public void update(int index, Penjualan s) {
         data.set(index, s);
     }
+    public void update(Penjualan p) {
+        // Find the Penjualan object with the unique ID you want to update
+        Optional<Penjualan> penjualanToUpdate = data.stream()
+                .filter(penjualan -> Objects.equals(penjualan.getNoFaktur(), p.getNoFaktur()))
+                .findFirst();
 
+        if (penjualanToUpdate.isPresent()) {
+            // Update the Penjualan object's properties
+            Penjualan updatedPenjualan = penjualanToUpdate.get();
+            // Notify the list that the Penjualan object has been updated
+            int index = data.indexOf(penjualanToUpdate.get());
+            data.set(index, updatedPenjualan);
+        }
+    }
     public void delete(Penjualan s) {
         data.remove(s);
     }
-
     private List<Penjualan> fetchFromMongo() {
         List<Stock> stocks = new ArrayList<>(
                 Arrays.asList(

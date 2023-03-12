@@ -13,7 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class SetoranFormController implements Initializable {
@@ -29,10 +32,12 @@ public class SetoranFormController implements Initializable {
     @FXML private Text sisaSetorSekarangText;
     private Penjualan p;
     private LanggananDAO langgananDAO;
+    private final NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("in", "ID"));
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         langgananDAO = new LanggananDAO();
+        applyListeners();
     }
 
 
@@ -45,9 +50,35 @@ public class SetoranFormController implements Initializable {
             namaLanggananText.setText(l.getNama());
         }
         tanggalTF.setText(p.getTanggal());
-        setoranText.setText(Integer.toString(p.getJumlah()));
-        jumlahDepositText.setText(Integer.toString(p.getSetoran()));
-        sisaText.setText(Integer.toString(p.getJumlah() - p.getSetoran()));
+        setoranText.setText(formatRupiah.format(Double.parseDouble(Integer.toString(p.getJumlah()))));
+        jumlahDepositText.setText(formatRupiah.format(Double.parseDouble(Integer.toString(p.getSetoran()))));
+        sisaText.setText(formatRupiah.format(p.getJumlah() - p.getSetoran()));
+    }
+    public Penjualan getUpdatedPenjualan() {
+        p.setSetoran(Integer.parseInt(setorSekarangTF.getText()));
+        return p;
+    }
+
+    private void applyListeners() {
+        // force the field to be numeric only
+        setorSekarangTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                setorSekarangTF.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        // Update values
+        setorSekarangTF.textProperty().addListener((observableValue, s, t1) -> {
+            if (t1.isEmpty()) return;
+
+            try {
+                int sisa = formatRupiah.parse(sisaText.getText()).intValue();
+
+                int sisaSetorSekarang = sisa - Integer.parseInt(t1);
+                sisaSetorSekarangText.setText(formatRupiah.format(sisaSetorSekarang));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
 }
