@@ -2,6 +2,7 @@ package com.example.Database.DAO;
 
 import com.example.Database.Connection.MongoDBConnection;
 import com.example.Database.Salesman;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
@@ -46,37 +47,59 @@ public class SalesDAO implements DataAcccessObject<Salesman> {
         });
     }
     public boolean add(Salesman s) {
-        MongoCollection<Document> collection = co.getCollection();
+        InsertOneResult result = null;
+        try {
+            MongoCollection<Document> collection = co.getCollection();
 
-        Document salesDoc = new Document("_id", new ObjectId());
-        salesDoc.append("no_salesman", s.getNo_salesman())
-                .append("nama", s.getNama())
-                .append("alamat", s.getAlamat());
+            Document salesDoc = new Document("_id", new ObjectId());
+            salesDoc.append("no_salesman", s.getNo_salesman())
+                    .append("nama", s.getNama())
+                    .append("alamat", s.getAlamat());
 
-        InsertOneResult result = collection.insertOne(salesDoc);
-        if (result.wasAcknowledged()) Platform.runLater(() -> data.add(s));
-        return result.wasAcknowledged();
+            result = collection.insertOne(salesDoc);
+        } catch (MongoException e) {
+            e.printStackTrace();
+        } finally {
+            co.close();
+            if (result.wasAcknowledged()) Platform.runLater(() -> data.add(s));
+            return result.wasAcknowledged();
+        }
     }
     public ObservableList<Salesman> getAll() {
         return data;
     }
     public boolean update(int index, Salesman s) {
-        MongoCollection<Document> collection = co.getCollection();
+        UpdateResult result = null;
 
-        // update one document
-        Bson filter = eq("_id", s.getId());
-        UpdateResult result = collection.replaceOne(filter, s.toDocument());
-        if (result.wasAcknowledged()) Platform.runLater(() -> data.set(index, s));
-        return result.wasAcknowledged();
+        try {
+            MongoCollection<Document> collection = co.getCollection();
+            // update one document
+            Bson filter = eq("_id", s.getId());
+            result = collection.replaceOne(filter, s.toDocument());
+        } catch (MongoException e) {
+            e.printStackTrace();
+        } finally {
+            co.close();
+            if (result.wasAcknowledged()) Platform.runLater(() -> data.set(index, s));
+            return result.wasAcknowledged();
+        }
     }
     public boolean delete(Salesman s) {
-        MongoCollection<Document> collection = co.getCollection();
+        DeleteResult result = null;
 
-        // delete one document
-        Bson filter = eq("_id", s.getId());
-        DeleteResult result = collection.deleteOne(filter);
-        if (result.wasAcknowledged()) Platform.runLater(() -> data.remove(s));
-        return result.wasAcknowledged();
+        try {
+            MongoCollection<Document> collection = co.getCollection();
+
+            // delete one document
+            Bson filter = eq("_id", s.getId());
+            result = collection.deleteOne(filter);
+        } catch (MongoException e) {
+            e.printStackTrace();
+        } finally {
+            co.close();
+            if (result.wasAcknowledged()) Platform.runLater(() -> data.remove(s));
+            return result.wasAcknowledged();
+        }
     }
     @Override
     public Optional<Salesman> findByNo(String no) {

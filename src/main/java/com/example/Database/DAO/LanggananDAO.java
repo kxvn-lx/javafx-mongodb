@@ -1,10 +1,20 @@
 package com.example.Database.DAO;
 
+import com.example.Database.Connection.MongoDBConnection;
 import com.example.Database.Langganan;
+import com.mongodb.MongoException;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +22,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.mongodb.client.model.Filters.eq;
+
 public class LanggananDAO implements DataAcccessObject<Langganan> {
+    private final MongoDBConnection co = new MongoDBConnection("entity", "langganan");
     private static final ObservableList<Langganan> data = FXCollections.observableArrayList();
 
     public LanggananDAO() {
@@ -35,19 +48,57 @@ public class LanggananDAO implements DataAcccessObject<Langganan> {
     }
 
     public boolean add(Langganan s) {
-        data.add(s);
-        return true;
+        try {
+            MongoCollection<Document> collection = co.getCollection();
+
+            Document doc = new Document("_id", new ObjectId());
+            doc.append("no_langganan", s.getNo_langganan())
+                    .append("nama", s.getNama())
+                    .append("alamat", s.getAlamat());
+
+            InsertOneResult result = collection.insertOne(doc);
+            if (result.wasAcknowledged()) Platform.runLater(() -> data.add(s));
+            return result.wasAcknowledged();
+        } catch (MongoException e) {
+            e.printStackTrace();
+        } finally {
+            co.close();
+        }
+        return false;
     }
     public ObservableList<Langganan> getAll() {
         return data;
     }
     public boolean update(int index, Langganan s) {
-        data.set(index, s);
-        return true;
+        try {
+            MongoCollection<Document> collection = co.getCollection();
+            // update one document
+            Bson filter = eq("_id", s.getId());
+            UpdateResult result = collection.replaceOne(filter, s.toDocument());
+            if (result.wasAcknowledged()) Platform.runLater(() -> data.set(index, s));
+            return result.wasAcknowledged();
+        } catch (MongoException e) {
+            e.printStackTrace();
+        } finally {
+            co.close();
+        }
+        return false;
     }
     public boolean delete(Langganan s) {
-        data.remove(s);
-        return true;
+        try {
+            MongoCollection<Document> collection = co.getCollection();
+
+            // delete one document
+            Bson filter = eq("_id", s.getId());
+            DeleteResult result = collection.deleteOne(filter);
+            if (result.wasAcknowledged()) Platform.runLater(() -> data.remove(s));
+            return result.wasAcknowledged();
+        } catch (MongoException e) {
+            e.printStackTrace();
+        } finally {
+            co.close();
+        }
+        return false;
     }
     public List<Langganan> findContains(String noLangganan) {
         List<Langganan> arr = new ArrayList<>();
