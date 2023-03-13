@@ -36,6 +36,7 @@ public class LanggananController implements Initializable {
 
         applyTableViewListeners();
         setupContextMenu();
+
     }
 
     /* EVENT LISTENERS */
