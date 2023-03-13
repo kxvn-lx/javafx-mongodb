@@ -52,13 +52,12 @@ public class AddsalesController implements Initializable {
     }
 
     public Salesman getSales() {
-        if (salesman == null) {
-            return new Salesman(new ObjectId(), namaTF.getText(), Integer.parseInt(noSalesmanTF.getText()), alamatTF.getText());
+        if (this.salesman == null) {
+            return new Salesman(new ObjectId(), namaTF.getText().trim(), Integer.parseInt(noSalesmanTF.getText().trim()), alamatTF.getText().trim());
         } else {
-            return new Salesman(salesman.getId(), namaTF.getText(), Integer.parseInt(noSalesmanTF.getText()), alamatTF.getText());
+            return new Salesman(this.salesman.getId(), namaTF.getText().trim(), Integer.parseInt(noSalesmanTF.getText().trim()), alamatTF.getText().trim());
         }
     }
-
     public void setTFs(Salesman sales) {
         dialogTitle.setText("Rubah Salesman");
         this.salesman = sales;
@@ -66,7 +65,6 @@ public class AddsalesController implements Initializable {
         namaTF.setText(sales.getNama());
         alamatTF.setText(sales.getAlamat());
     }
-
     public boolean isNull() {
        return namaTF.getText().isEmpty() || noSalesmanTF.getText().isEmpty() || alamatTF.getText().isEmpty();
     }

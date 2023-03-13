@@ -35,13 +35,11 @@ public class AddStockController implements Initializable {
 
 
     public Stock getStock() {
-        return new Stock(kodeTF.getText().toUpperCase(), namaTF.getText(), merekTF.getText(), Integer.parseInt(hargaTF.getText()), satuanTF.getText());
+        return new Stock(kodeTF.getText().trim().toUpperCase(), namaTF.getText().trim(), merekTF.getText().trim(), Integer.parseInt(hargaTF.getText().trim()), satuanTF.getText());
     }
-
     public boolean isNull() {
         return namaTF.getText().isEmpty() || kodeTF.getText().isEmpty() || merekTF.getText().isEmpty() || hargaTF.getText().isEmpty() || satuanTF.getText().isEmpty();
     }
-
     public void setTFs(Stock s) {
         dialogPane.setHeaderText("Rubah Stock");
 

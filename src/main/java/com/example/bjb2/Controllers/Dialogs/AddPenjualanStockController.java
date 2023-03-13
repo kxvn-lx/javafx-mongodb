@@ -98,7 +98,6 @@ public class AddPenjualanStockController implements Initializable {
             }
         });
     }
-
     private void setupSuggestionsTF() {
         listView.setItems(stockDAO.get());
         listView.setCellFactory(new Callback<>() {
@@ -140,7 +139,6 @@ public class AddPenjualanStockController implements Initializable {
             satuanText.setText(listView.getSelectionModel().getSelectedItem().getSatuan());
         });
     }
-
     private void validateForm() {
         dialogPane.lookupButton(ButtonType.OK).setDisable(isNull());
     }

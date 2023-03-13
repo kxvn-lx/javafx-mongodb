@@ -153,10 +153,10 @@ public class AddPenjualanController implements Initializable {
         List<PenjualanStock> pjs = tableView.getItems();
         int s = optionalPenjualan.get().isPresent() ? optionalPenjualan.get().get().getSetoran() : 0;
         return new Penjualan(
-                Integer.parseInt(noFakturTF.getText()),
-                Integer.parseInt(noSalesmanTF.getText()),
-                noLanggananTF.getText().toUpperCase(),
-                tanggalTF.getText(),
+                Integer.parseInt(noFakturTF.getText().trim()),
+                Integer.parseInt(noSalesmanTF.getText().trim()),
+                noLanggananTF.getText().toUpperCase().trim(),
+                tanggalTF.getText().trim(),
                 statusCB.getValue(),
                 pjs.toArray(new PenjualanStock[0]),
                 calculateJumlah(),

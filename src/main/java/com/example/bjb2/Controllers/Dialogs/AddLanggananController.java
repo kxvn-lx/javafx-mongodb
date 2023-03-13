@@ -26,13 +26,11 @@ public class AddLanggananController implements Initializable {
     }
 
     public Langganan getLangganan() {
-        return new Langganan(langganan == null ? new ObjectId() : langganan.getId(), noLanggananTF.getText().toUpperCase(), namaTF.getText(), alamatTF.getText());
+        return new Langganan(langganan == null ? new ObjectId() : langganan.getId(), noLanggananTF.getText().trim().toUpperCase(), namaTF.getText().trim(), alamatTF.getText().trim());
     }
-
     public boolean isNull() {
         return namaTF.getText().isEmpty() || noLanggananTF.getText().isEmpty() || alamatTF.getText().isEmpty();
     }
-
     public void setTFs(Langganan lg) {
         dialogPane.setHeaderText("Rubah Langganan");
         this.langganan = lg;
@@ -48,7 +46,6 @@ public class AddLanggananController implements Initializable {
         namaTF.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
         alamatTF.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
     }
-
     private void validateForm() {
         dialogPane.lookupButton(ButtonType.OK).setDisable(isNull());
     }
