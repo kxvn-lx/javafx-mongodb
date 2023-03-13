@@ -1,17 +1,10 @@
 package com.example.bjb2.Controllers;
 
-import com.example.Database.DAO.LanggananDAO;
 import com.example.Database.DAO.PenjualanDAO;
-import com.example.Database.Langganan;
 import com.example.Database.Penjualan;
-import com.example.Database.PenjualanStock;
-import com.example.Database.Stock;
 import com.example.bjb2.Controllers.Dialogs.AddPenjualanController;
-import com.example.bjb2.Controllers.Dialogs.AddPenjualanStockController;
-import com.example.bjb2.Controllers.Dialogs.AddStockController;
-import com.example.bjb2.Models.Model;
+import com.example.bjb2.Views.VFModel;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,7 +33,7 @@ public class PenjualanController implements Initializable {
         dao = new PenjualanDAO();
         dao.addListener(tableView);
 
-        Model.getInstance().getVF().getClientSelectedMenuItem().addListener((observableValue, oldVal, newVal) -> {
+        VFModel.getInstance().getVF().getClientSelectedMenuItem().addListener((observableValue, oldVal, newVal) -> {
             if (newVal.equals("Penjualan")) {
                 tableView.refresh();
             }

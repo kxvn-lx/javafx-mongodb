@@ -2,22 +2,13 @@ package com.example.bjb2.Controllers;
 
 import com.example.Database.DAO.PenjualanDAO;
 import com.example.Database.Penjualan;
-import com.example.bjb2.Controllers.Dialogs.AddPenjualanController;
 import com.example.bjb2.Controllers.Dialogs.SetoranFormController;
-import com.example.bjb2.Models.Model;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import com.example.bjb2.Views.VFModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.SubScene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +31,7 @@ public class SetoranController implements Initializable {
         setupTVCellValueFactory();
         getNotPaid();
         // Setup listener whenever user went to Setoran screen
-        Model.getInstance().getVF().getClientSelectedMenuItem().addListener((observableValue, oldVal, newVal) -> {
+        VFModel.getInstance().getVF().getClientSelectedMenuItem().addListener((observableValue, oldVal, newVal) -> {
             if (newVal.equals("Setoran")) {
                 getNotPaid();
             }

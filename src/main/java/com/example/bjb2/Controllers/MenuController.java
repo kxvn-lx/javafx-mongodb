@@ -1,6 +1,6 @@
 package com.example.bjb2.Controllers;
 
-import com.example.bjb2.Models.Model;
+import com.example.bjb2.Views.VFModel;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
@@ -27,12 +27,12 @@ public class MenuController implements Initializable {
         setoran_btn.setOnAction(event -> onSetoran());
     }
     private void onSales() {
-        Model.getInstance().getVF().getClientSelectedMenuItem().set("Sales");
+        VFModel.getInstance().getVF().getClientSelectedMenuItem().set("Sales");
     }
     private void onLangganan() {
-        Model.getInstance().getVF().getClientSelectedMenuItem().set("Langganan");
+        VFModel.getInstance().getVF().getClientSelectedMenuItem().set("Langganan");
     }
-    private void onStock() { Model.getInstance().getVF().getClientSelectedMenuItem().set("Stock"); }
-    private void onPenjualan() { Model.getInstance().getVF().getClientSelectedMenuItem().set("Penjualan"); }
-    private void onSetoran() { Model.getInstance().getVF().getClientSelectedMenuItem().set("Setoran"); }
+    private void onStock() { VFModel.getInstance().getVF().getClientSelectedMenuItem().set("Stock"); }
+    private void onPenjualan() { VFModel.getInstance().getVF().getClientSelectedMenuItem().set("Penjualan"); }
+    private void onSetoran() { VFModel.getInstance().getVF().getClientSelectedMenuItem().set("Setoran"); }
 }
