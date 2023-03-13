@@ -44,8 +44,8 @@ public class SetoranFormController implements Initializable {
     public void setTFs(Penjualan p) {
         this.p = p;
         noFakturTF.setText(Integer.toString(p.getNoFaktur()));
-        if (langgananDAO.find(p.getNoLangganan()).isPresent()) {
-            Langganan l = langgananDAO.find(p.getNoLangganan()).get();
+        if (langgananDAO.findByNo(p.getNoLangganan()).isPresent()) {
+            Langganan l = langgananDAO.findByNo(p.getNoLangganan()).get();
             noLanggananText.setText(l.getNo_langganan());
             namaLanggananText.setText(l.getNama());
         }

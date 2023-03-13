@@ -16,15 +16,13 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.set;
 
-public class SalesDAO {
+public class SalesDAO implements DataAcccessObject<Salesman> {
     private final MongoDBConnection co = new MongoDBConnection("entity", "salesman");
     private static final ObservableList<Salesman> data = FXCollections.observableArrayList();
 
@@ -59,7 +57,7 @@ public class SalesDAO {
         if (result.wasAcknowledged()) Platform.runLater(() -> data.add(s));
         return result.wasAcknowledged();
     }
-    public ObservableList<Salesman> get() {
+    public ObservableList<Salesman> getAll() {
         return data;
     }
     public boolean update(int index, Salesman s) {
@@ -80,26 +78,27 @@ public class SalesDAO {
         if (result.wasAcknowledged()) Platform.runLater(() -> data.remove(s));
         return result.wasAcknowledged();
     }
-    public Optional<Salesman> find(Integer noSalesman) {
+    @Override
+    public Optional<Salesman> findByNo(String no) {
         List<Salesman> l = data.stream()
-                .filter(salesman -> salesman.getNo_salesman() == noSalesman)
+                .filter(s -> s.getNo_salesman() == Integer.parseInt(no))
                 .collect(Collectors.toList());
 
         if (l.size() > 0) return Optional.of(l.get(0));
         else return Optional.empty();
     }
-    public List<Salesman> findByN(String noSalesman) {
+    @Override
+    public List<Salesman> findContains(String keyword) {
         List<Salesman> arr = new ArrayList<>();
         for (Salesman s : data) {
             String numberAsString = String.valueOf(s.getNo_salesman());
-            if (numberAsString.contains(noSalesman)) {
+            if (numberAsString.contains(keyword)) {
                 arr.add(s);
             }
         }
 
         return arr;
     }
-
     private List<Salesman> fetchFromMongo() {
         List<Salesman> salesmanList = new ArrayList<>();
         MongoCollection<Document> collection = co.getCollection();

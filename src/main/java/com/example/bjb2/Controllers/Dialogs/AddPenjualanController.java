@@ -256,7 +256,7 @@ public class AddPenjualanController implements Initializable {
                 salesman_namaText.setText("");
                 return;
             }
-            Optional<Salesman> salesman = salesDAO.find(Integer.parseInt(t1));
+            Optional<Salesman> salesman = salesDAO.findByNo(t1);
             if (salesman.isPresent()) {
                 salesman_namaText.setText(salesman.get().getNama());
             } else {
@@ -269,7 +269,7 @@ public class AddPenjualanController implements Initializable {
                 suggestionListView.getItems().clear();
                 return;
             }
-            List<Salesman> arr = salesDAO.findByN(t1);
+            List<Salesman> arr = salesDAO.findContains(t1);
             suggestionListView.getItems().clear();
             for (Salesman salesman: arr) {
                 suggestionListView.getItems().add(salesman);
@@ -281,7 +281,7 @@ public class AddPenjualanController implements Initializable {
                 langganan_namaText.setText("");
                 return;
             }
-            Optional<Langganan> l = langgananDAO.find(t1);
+            Optional<Langganan> l = langgananDAO.findByNo(t1);
             if (l.isPresent()) {
                 langganan_namaText.setText(l.get().getNama());
             } else {
@@ -295,7 +295,7 @@ public class AddPenjualanController implements Initializable {
             }
 
 
-            List<Langganan> arr = langgananDAO.findByN(t1);
+            List<Langganan> arr = langgananDAO.findContains(t1);
             suggestionListView.getItems().clear();
             for (Langganan l: arr) {
                 suggestionListView.getItems().add(l);
@@ -328,10 +328,10 @@ public class AddPenjualanController implements Initializable {
      * Update the UI when Penjualan is found after typing on NoFaktur
      */
     private void updateWhenPFound() {
-        Optional<Salesman> s = salesDAO.find(optionalPenjualan.get().get().getNoSalesman());
+        Optional<Salesman> s = salesDAO.findByNo(Integer.toString(optionalPenjualan.get().get().getNoSalesman()));
         salesman_namaText.setText(s.get().getNama());
 
-        Optional<Langganan> l = langgananDAO.find(optionalPenjualan.get().get().getNoLangganan());
+        Optional<Langganan> l = langgananDAO.findByNo(optionalPenjualan.get().get().getNoLangganan());
         langganan_namaText.setText(l.get().getNama());
 
         tableView.getItems().setAll(optionalPenjualan.get().get().getPjs());

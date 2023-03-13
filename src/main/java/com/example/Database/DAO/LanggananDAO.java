@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class LanggananDAO {
+public class LanggananDAO implements DataAcccessObject<Langganan> {
     private static final ObservableList<Langganan> data = FXCollections.observableArrayList();
 
     public LanggananDAO() {
@@ -34,25 +34,28 @@ public class LanggananDAO {
         });
     }
 
-    public void add(Langganan s) {
+    public boolean add(Langganan s) {
         data.add(s);
+        return true;
     }
-    public ObservableList<Langganan> get() {
+    public ObservableList<Langganan> getAll() {
         return data;
     }
-    public void update(int index, Langganan s) {
+    public boolean update(int index, Langganan s) {
         data.set(index, s);
+        return true;
     }
-    public void delete(Langganan s) {
+    public boolean delete(Langganan s) {
         data.remove(s);
+        return true;
     }
-    public List<Langganan> findByN(String noLangganan) {
+    public List<Langganan> findContains(String noLangganan) {
         List<Langganan> arr = new ArrayList<>();
 
         for (Langganan l : data) { if (l.getNo_langganan().contains(noLangganan.toUpperCase())) arr.add(l); }
         return arr;
     }
-    public Optional<Langganan> find(String noLangganan) {
+    public Optional<Langganan> findByNo(String noLangganan) {
         List<Langganan> l = data.stream()
                 .filter(langganan -> langganan.getNo_langganan().equals(noLangganan.toUpperCase()))
                 .collect(Collectors.toList());
@@ -62,14 +65,13 @@ public class LanggananDAO {
     }
 
     private List<Langganan> fetchFromMongo() {
-        List<Langganan> list = new ArrayList<>(
+        return new ArrayList<>(
                 Arrays.asList(
                         new Langganan("MTH202", "Mentari Jaya", "Perkamil"),
                         new Langganan("HS", "ENAM", "Jengki"),
                         new Langganan("MRT101", "Orion", "Morotai"),
                         new Langganan("BTG050", "Girian", "Bitung") )
         );
-        return list;
     }
 
 }

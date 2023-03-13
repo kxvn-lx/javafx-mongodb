@@ -32,7 +32,7 @@ public class LanggananController implements Initializable {
         dao = new LanggananDAO();
         dao.addListener(tableView);
 
-        tableView.getItems().setAll(dao.get());
+        tableView.getItems().setAll(dao.getAll());
 
         applyTableViewListeners();
         setupContextMenu();

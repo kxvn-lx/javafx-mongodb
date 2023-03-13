@@ -3,7 +3,6 @@ package com.example.bjb2.Controllers;
 import com.example.Database.DAO.SalesDAO;
 import com.example.Database.Salesman;
 import com.example.bjb2.Controllers.Dialogs.AddsalesController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,7 +36,7 @@ public class SalesController implements Initializable {
         dao = new SalesDAO();
         dao.addListener(tableView);
 
-        tableView.getItems().setAll(dao.get());
+        tableView.getItems().setAll(dao.getAll());
 
         applyTableViewListeners();
         setupContextMenu();
