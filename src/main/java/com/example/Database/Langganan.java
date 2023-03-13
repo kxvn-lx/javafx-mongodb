@@ -9,12 +9,6 @@ public class Langganan {
     private String nama;
     private String alamat;
 
-    public Langganan(String no_langanan, String nama, String alamat) {
-        this.no_langganan = no_langanan;
-        this.nama = nama;
-        this.alamat = alamat;
-    }
-
     public Langganan(ObjectId id, String no_langanan, String nama, String alamat) {
         this.no_langganan = no_langanan;
         this.nama = nama;

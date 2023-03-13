@@ -76,7 +76,7 @@ public class SetoranController implements Initializable {
         setoranCol.setCellValueFactory(new PropertyValueFactory<>("setoran"));
     }
     private void getNotPaid() {
-        List<Penjualan> allList = dao.get();
+        List<Penjualan> allList = dao.getAll();
         // By Default, get just not paid
         List<Penjualan> notPaidList = allList.stream()
                 .filter(penjualan -> penjualan.getSetoran() < penjualan.getJumlah())
@@ -85,7 +85,7 @@ public class SetoranController implements Initializable {
         tableView.getItems().setAll(notPaidList);
     }
     private void getPaid() {
-        List<Penjualan> allList = dao.get();
+        List<Penjualan> allList = dao.getAll();
         List<Penjualan> paidList = allList.stream()
                 .filter(penjualan -> penjualan.getJumlah() == penjualan.getSetoran() || penjualan.getSetoran() >= penjualan.getJumlah())
                 .collect(Collectors.toList());

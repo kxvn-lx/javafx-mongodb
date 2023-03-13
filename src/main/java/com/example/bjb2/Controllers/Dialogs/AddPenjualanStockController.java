@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import org.bson.types.ObjectId;
 
 import java.net.URL;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public class AddPenjualanStockController implements Initializable {
     @FXML private Text hargaText;
     private StockDAO stockDAO;
     @FXML private ListView<Stock> listView;
+    private PenjualanStock penjualanStock;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,7 +46,7 @@ public class AddPenjualanStockController implements Initializable {
 
     public PenjualanStock getPenjualanStock() {
         if (stockDAO.findByNo(kdStockTF.getText()).isPresent()) {
-            return new PenjualanStock(stockDAO.findByNo(kdStockTF.getText()).get(), Integer.parseInt(qtyTF.getText()));
+            return new PenjualanStock(penjualanStock == null ? penjualanStock.getId() : new ObjectId(), stockDAO.findByNo(kdStockTF.getText()).get(), Integer.parseInt(qtyTF.getText()));
         } else {
             throw new RuntimeException();
         }
@@ -54,7 +56,7 @@ public class AddPenjualanStockController implements Initializable {
     }
     public void setTFs(PenjualanStock s) {
         dialogPane.setHeaderText("Rubah Barang Terjual");
-
+        this.penjualanStock = s;
         kdStockTF.setText(s.getStock().getKode());
         qtyTF.setText(Integer.toString(s.getQty()));
     }

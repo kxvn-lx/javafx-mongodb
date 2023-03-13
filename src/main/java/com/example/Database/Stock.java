@@ -31,7 +31,7 @@ public class Stock {
     @Override
     public String toString() {
         return "Stock{" +
-                ", kode='" + kode + '\'' +
+                "  kode='" + kode + '\'' +
                 ", nama='" + nama + '\'' +
                 ", merek='" + merek + '\'' +
                 ", harga=" + harga +

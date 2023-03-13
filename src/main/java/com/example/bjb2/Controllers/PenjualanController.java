@@ -49,7 +49,7 @@ public class PenjualanController implements Initializable {
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
         stocksCol.setCellValueFactory(cd -> new SimpleStringProperty(Integer.toString(cd.getValue().getPjs().length)));
 
-        tableView.getItems().setAll(dao.get());
+        tableView.getItems().setAll(dao.getAll());
 
         applyTableViewListeners();
         setupContextMenu();
@@ -69,7 +69,12 @@ public class PenjualanController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                dao.add(c.getPenjualan());
+                System.out.println(c.getPenjualan());
+                if (dao.add(c.getPenjualan())) {
+                    System.out.println("ADD PENJUALAN OK");
+                } else {
+                    System.out.println("ADD PENJUALAN FAILED");
+                }
             }
 
 
@@ -100,7 +105,12 @@ public class PenjualanController implements Initializable {
             tableView.getSelectionModel().clearSelection();
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                dao.update(index, c.getPenjualan());
+                System.out.println(selectedItem);
+                if (dao.update(index, c.getPenjualan())) {
+                    System.out.println("UPDATE PENJUALAN OK");
+                } else {
+                    System.out.println("UPDATE PENJUALAN FAILED");
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -120,7 +130,12 @@ public class PenjualanController implements Initializable {
         // show the dialog and wait for a response
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                dao.delete(selectedItem);
+                System.out.println(selectedItem);
+                if(dao.delete(selectedItem)) {
+                    System.out.println("DELETE STOCK OK");
+                } else {
+                    System.out.println("DELETE STOCK FAILED");
+                }
             }
 
             tableView.getSelectionModel().clearSelection();
@@ -138,15 +153,18 @@ public class PenjualanController implements Initializable {
     }
     private void setupContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem menuItem1 = new MenuItem("Deselect");
+        MenuItem menuItem1 = new MenuItem("Batal Memilih");
         menuItem1.setOnAction(event -> {
             tableView.getSelectionModel().clearSelection();
         });
-        contextMenu.getItems().addAll(menuItem1);
+        MenuItem menuItem2 = new MenuItem("Muat Ulang");
+        menuItem2.setOnAction(event -> {
+            tableView.getItems().setAll(dao.getAll());
+        });
+
+        contextMenu.getItems().addAll(menuItem1,menuItem2);
 
         tableView.setContextMenu(contextMenu);
-        tableView.setOnContextMenuRequested(event -> {
-            contextMenu.show(tableView, event.getScreenX(), event.getScreenY());
-        });
+        tableView.setOnContextMenuRequested(event -> contextMenu.show(tableView, event.getScreenX(), event.getScreenY()));
     }
 }

@@ -20,15 +20,6 @@ public class Salesman {
         this.nama = nama;
         this.alamat = alamat;
     }
-    /**
-     * @param nama Salesman pe nama
-     * @param no_salesman nomor salesman
-     */
-    public Salesman(String nama, int no_salesman, String alamat) {
-        this.nama = nama;
-        this.no_salesman = no_salesman;
-        this.alamat = alamat;
-    }
 
     @Override
     public String toString() {

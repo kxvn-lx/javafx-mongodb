@@ -1,6 +1,7 @@
 package com.example.bjb2.Controllers.Dialogs;
 
 import com.example.Database.*;
+import com.example.Database.Connection.MongoDBConnection;
 import com.example.Database.DAO.LanggananDAO;
 import com.example.Database.DAO.PenjualanDAO;
 import com.example.Database.DAO.SalesDAO;
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.net.URL;
@@ -58,7 +60,7 @@ public class AddPenjualanController implements Initializable {
         setupContextMenu();
 
         // Get the latest noFaktur and increment by one
-        List<Penjualan> allPs = penjualanDAO.get();
+        List<Penjualan> allPs = penjualanDAO.getAll();
         Penjualan latestPenjualan = allPs.stream()
                 .max(Comparator.comparingInt(Penjualan::getNoFaktur))
                 .orElse(null);
@@ -151,8 +153,8 @@ public class AddPenjualanController implements Initializable {
     }
     public Penjualan getPenjualan() {
         List<PenjualanStock> pjs = tableView.getItems();
-        int s = optionalPenjualan.get().isPresent() ? optionalPenjualan.get().get().getSetoran() : 0;
         return new Penjualan(
+                optionalPenjualan.get().isPresent() ? optionalPenjualan.get().get().getId() : new ObjectId(),
                 Integer.parseInt(noFakturTF.getText().trim()),
                 Integer.parseInt(noSalesmanTF.getText().trim()),
                 noLanggananTF.getText().toUpperCase().trim(),
@@ -160,13 +162,13 @@ public class AddPenjualanController implements Initializable {
                 statusCB.getValue(),
                 pjs.toArray(new PenjualanStock[0]),
                 calculateJumlah(),
-                s
+                optionalPenjualan.get().isPresent() ? optionalPenjualan.get().get().getSetoran() : 0
         );
     }
     public void setTFs(Penjualan p) {
         dialogPane.setHeaderText("Rubah Penjualan");
 
-        this.optionalPenjualan.setValue(Optional.of(p));
+        this.optionalPenjualan.setValue(Optional.ofNullable(p));
 
         noFakturTF.setText(Integer.toString(p.getNoFaktur()));
         noSalesmanTF.setText(Integer.toString(p.getNoSalesman()));
@@ -222,7 +224,7 @@ public class AddPenjualanController implements Initializable {
         });
 
         // Listen to NoFaktur textfield
-        List<Penjualan> penjualanList = penjualanDAO.get();
+        List<Penjualan> penjualanList = penjualanDAO.getAll();
         noFakturTF.textProperty().addListener(((observableValue, s, t1) -> {
             if (noFakturTF.getText().isEmpty()) {
                 noSalesmanTF.setText("");
@@ -329,12 +331,12 @@ public class AddPenjualanController implements Initializable {
      */
     private void updateWhenPFound() {
         Optional<Salesman> s = salesDAO.findByNo(Integer.toString(optionalPenjualan.get().get().getNoSalesman()));
-        salesman_namaText.setText(s.get().getNama());
+        s.ifPresent(salesman -> salesman_namaText.setText(salesman.getNama()));
 
         Optional<Langganan> l = langgananDAO.findByNo(optionalPenjualan.get().get().getNoLangganan());
-        langganan_namaText.setText(l.get().getNama());
+        l.ifPresent(langganan -> langganan_namaText.setText(langganan.getNama()));
 
-        tableView.getItems().setAll(optionalPenjualan.get().get().getPjs());
+        optionalPenjualan.get().ifPresent(penjualan -> tableView.getItems().setAll(penjualan.getPjs()));
     }
     private int calculateJumlah() {
         int sum = 0;
@@ -348,10 +350,11 @@ public class AddPenjualanController implements Initializable {
     }
     private void setupContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem menuItem1 = new MenuItem("Deselect");
+        MenuItem menuItem1 = new MenuItem("Batal Memilih");
         menuItem1.setOnAction(event -> {
             tableView.getSelectionModel().clearSelection();
         });
+
         contextMenu.getItems().addAll(menuItem1);
 
         tableView.setContextMenu(contextMenu);
