@@ -35,7 +35,7 @@ public class AddPenjualanStockController implements Initializable {
         dialogPane.lookupButton(ButtonType.OK).setDisable(true);
         dialogPane.sceneProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) { return; }
-            listView.setItems(stockDAO.get());
+            listView.setItems(stockDAO.getAll());
         });
 
         applyTFsListeners();
@@ -43,8 +43,8 @@ public class AddPenjualanStockController implements Initializable {
     }
 
     public PenjualanStock getPenjualanStock() {
-        if (stockDAO.find(kdStockTF.getText()).isPresent()) {
-            return new PenjualanStock(stockDAO.find(kdStockTF.getText()).get(), Integer.parseInt(qtyTF.getText()));
+        if (stockDAO.findByNo(kdStockTF.getText()).isPresent()) {
+            return new PenjualanStock(stockDAO.findByNo(kdStockTF.getText()).get(), Integer.parseInt(qtyTF.getText()));
         } else {
             throw new RuntimeException();
         }
@@ -77,7 +77,7 @@ public class AddPenjualanStockController implements Initializable {
             if (t1.isEmpty()) {
                 return;
             }
-            Optional<Stock> stock = stockDAO.find(kdStockTF.getText());
+            Optional<Stock> stock = stockDAO.findByNo(kdStockTF.getText());
             if (stock.isEmpty()) { return; }
 
             namaText.setText(stock.get().getNama());
@@ -88,7 +88,7 @@ public class AddPenjualanStockController implements Initializable {
 
         kdStockTF.focusedProperty().addListener((observableValue, s, t1) -> {
             if (!t1) {
-                Optional<Stock> stock = stockDAO.find(kdStockTF.getText());
+                Optional<Stock> stock = stockDAO.findByNo(kdStockTF.getText());
                 if (stock.isEmpty()) { return; }
 
                 namaText.setText(stock.get().getNama());
@@ -99,7 +99,7 @@ public class AddPenjualanStockController implements Initializable {
         });
     }
     private void setupSuggestionsTF() {
-        listView.setItems(stockDAO.get());
+        listView.setItems(stockDAO.getAll());
         listView.setCellFactory(new Callback<>() {
             @Override
             public ListCell<Stock> call(ListView<Stock> stockListView) {
@@ -120,14 +120,14 @@ public class AddPenjualanStockController implements Initializable {
         kdStockTF.textProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue.length() > 0) {
                 ObservableList<Stock> filteredList = FXCollections.observableArrayList();
-                for (Stock stock : stockDAO.get()) {
+                for (Stock stock : stockDAO.getAll()) {
                     if (stock.getKode().toLowerCase().startsWith(newValue.toLowerCase())) {
                         filteredList.add(stock);
                     }
                 }
                 listView.setItems(filteredList);
             } else {
-                listView.setItems(stockDAO.get());
+                listView.setItems(stockDAO.getAll());
             }
         });
 

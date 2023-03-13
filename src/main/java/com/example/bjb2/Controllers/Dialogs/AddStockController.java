@@ -3,9 +3,8 @@ package com.example.bjb2.Controllers.Dialogs;
 import com.example.Database.Stock;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import org.bson.types.ObjectId;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +18,8 @@ public class AddStockController implements Initializable {
     @FXML private TextField merekTF;
     @FXML private TextField hargaTF;
     @FXML private TextField satuanTF;
+
+    private Stock stock;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,13 +36,14 @@ public class AddStockController implements Initializable {
 
 
     public Stock getStock() {
-        return new Stock(kodeTF.getText().trim().toUpperCase(), namaTF.getText().trim(), merekTF.getText().trim(), Integer.parseInt(hargaTF.getText().trim()), satuanTF.getText());
+        return new Stock(stock == null ? new ObjectId() : this.stock.getId(), kodeTF.getText().trim().toUpperCase(), namaTF.getText().trim(), merekTF.getText().trim(), Integer.parseInt(hargaTF.getText().trim()), satuanTF.getText());
     }
     public boolean isNull() {
         return namaTF.getText().isEmpty() || kodeTF.getText().isEmpty() || merekTF.getText().isEmpty() || hargaTF.getText().isEmpty() || satuanTF.getText().isEmpty();
     }
     public void setTFs(Stock s) {
         dialogPane.setHeaderText("Rubah Stock");
+        this.stock = s;
 
         kodeTF.setText(s.getKode());
         namaTF.setText(s.getNama());

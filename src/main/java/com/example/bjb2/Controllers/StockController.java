@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,14 +37,13 @@ public class StockController implements Initializable {
         dao = new StockDAO();
         dao.addListener(tableView);
 
-        tableView.getItems().setAll(dao.get());
+        tableView.getItems().setAll(dao.getAll());
 
         applyTableViewListeners();
         setupContextMenu();
-
     }
 
-    public void handleTambahBtn(ActionEvent event) {
+    public void handleTambahBtn() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddStockDialog.fxml"));
@@ -57,7 +57,11 @@ public class StockController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                dao.add(c.getStock());
+                if (dao.add(c.getStock())) {
+                    System.out.println("ADD STOCK OK");
+                } else {
+                    System.out.println("ADD STOCK FAILED");
+                }
             }
 
 
@@ -65,7 +69,7 @@ public class StockController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    public void handleRubahBtn(ActionEvent event) {
+    public void handleRubahBtn() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/example/bjb2/AddStockDialog.fxml"));
@@ -88,13 +92,17 @@ public class StockController implements Initializable {
             tableView.getSelectionModel().clearSelection();
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                dao.update(index, c.getStock());
+                if (dao.update(index, c.getStock())) {
+                    System.out.println("UPDATE STOCK OK");
+                } else {
+                    System.out.println("UPDATE STOCK FAILED");
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public void handleHapusBtn(ActionEvent event) {
+    public void handleHapusBtn() {
         // Get the selection model
         TableView.TableViewSelectionModel<Stock> selectionModel = tableView.getSelectionModel();
         // Get the selected item
@@ -107,7 +115,11 @@ public class StockController implements Initializable {
         // show the dialog and wait for a response
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                dao.delete(selectedItem);
+                if (dao.delete(selectedItem)) {
+                    System.out.println("DELETE STOCK OK");
+                } else {
+                    System.out.println("DELETE STOCK OK");
+                }
             }
 
             tableView.getSelectionModel().clearSelection();
@@ -126,11 +138,16 @@ public class StockController implements Initializable {
     }
     private void setupContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem menuItem1 = new MenuItem("Deselect");
+        MenuItem menuItem1 = new MenuItem("Batal Memilih");
         menuItem1.setOnAction(event -> {
             tableView.getSelectionModel().clearSelection();
         });
-        contextMenu.getItems().addAll(menuItem1);
+        MenuItem menuItem2 = new MenuItem("Muat Ulang");
+        menuItem2.setOnAction(event -> {
+            tableView.getItems().setAll(dao.getAll());
+        });
+
+        contextMenu.getItems().addAll(menuItem1,menuItem2);
 
         tableView.setContextMenu(contextMenu);
         tableView.setOnContextMenuRequested(event -> contextMenu.show(tableView, event.getScreenX(), event.getScreenY()));
