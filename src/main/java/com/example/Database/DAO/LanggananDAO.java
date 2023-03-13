@@ -2,6 +2,7 @@ package com.example.Database.DAO;
 
 import com.example.Database.Connection.MongoDBConnection;
 import com.example.Database.Langganan;
+import com.example.Database.Salesman;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
@@ -51,14 +52,14 @@ public class LanggananDAO implements DataAcccessObject<Langganan> {
         try {
             MongoCollection<Document> collection = co.getCollection();
 
-            Document doc = new Document("_id", new ObjectId());
+            Document doc = new Document("_id", s.getId());
             doc.append("no_langganan", s.getNo_langganan())
                     .append("nama", s.getNama())
                     .append("alamat", s.getAlamat());
 
             InsertOneResult result = collection.insertOne(doc);
-            if (result.wasAcknowledged()) Platform.runLater(() -> data.add(s));
-            return result.wasAcknowledged();
+            if (result.wasAcknowledged() && result.getInsertedId() != null) Platform.runLater(() -> data.add(s));
+            return true;
         } catch (MongoException e) {
             e.printStackTrace();
         } finally {
@@ -70,13 +71,16 @@ public class LanggananDAO implements DataAcccessObject<Langganan> {
         return data;
     }
     public boolean update(int index, Langganan s) {
+        System.out.println(s);
         try {
             MongoCollection<Document> collection = co.getCollection();
             // update one document
             Bson filter = eq("_id", s.getId());
             UpdateResult result = collection.replaceOne(filter, s.toDocument());
-            if (result.wasAcknowledged()) Platform.runLater(() -> data.set(index, s));
-            return result.wasAcknowledged();
+            if (result.wasAcknowledged() && result.getModifiedCount() > 0) {
+                Platform.runLater(() -> data.set(index, s));
+                return true;
+            }
         } catch (MongoException e) {
             e.printStackTrace();
         } finally {
@@ -85,14 +89,15 @@ public class LanggananDAO implements DataAcccessObject<Langganan> {
         return false;
     }
     public boolean delete(Langganan s) {
+        System.out.println(s);
         try {
             MongoCollection<Document> collection = co.getCollection();
 
             // delete one document
             Bson filter = eq("_id", s.getId());
             DeleteResult result = collection.deleteOne(filter);
-            if (result.wasAcknowledged()) Platform.runLater(() -> data.remove(s));
-            return result.wasAcknowledged();
+            if (result.wasAcknowledged() && result.getDeletedCount() > 0) Platform.runLater(() -> data.remove(s));
+            return true;
         } catch (MongoException e) {
             e.printStackTrace();
         } finally {
@@ -116,13 +121,21 @@ public class LanggananDAO implements DataAcccessObject<Langganan> {
     }
 
     private List<Langganan> fetchFromMongo() {
-        return new ArrayList<>(
-                Arrays.asList(
-                        new Langganan("MTH202", "Mentari Jaya", "Perkamil"),
-                        new Langganan("HS", "ENAM", "Jengki"),
-                        new Langganan("MRT101", "Orion", "Morotai"),
-                        new Langganan("BTG050", "Girian", "Bitung") )
-        );
+        List<Langganan> fetched = new ArrayList<>();
+        MongoCollection<Document> collection = co.getCollection();
+        for (Document doc : collection.find()) {
+            Langganan obj = new Langganan(doc.getObjectId("_id"), doc.get("nama").toString(), doc.getString("no_langganan"), doc.getString("alamat"));
+            fetched.add(obj);
+        }
+        return fetched;
+
+//        return new ArrayList<>(
+//                Arrays.asList(
+//                        new Langganan("MTH202", "Mentari Jaya", "Perkamil"),
+//                        new Langganan("HS", "ENAM", "Jengki"),
+//                        new Langganan("MRT101", "Orion", "Morotai"),
+//                        new Langganan("BTG050", "Girian", "Bitung") )
+//        );
     }
 
 }

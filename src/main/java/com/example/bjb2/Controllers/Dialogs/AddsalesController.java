@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import org.bson.types.ObjectId;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -52,7 +53,7 @@ public class AddsalesController implements Initializable {
 
     public Salesman getSales() {
         if (salesman == null) {
-            return new Salesman(namaTF.getText(), Integer.parseInt(noSalesmanTF.getText()), alamatTF.getText());
+            return new Salesman(new ObjectId(), namaTF.getText(), Integer.parseInt(noSalesmanTF.getText()), alamatTF.getText());
         } else {
             return new Salesman(salesman.getId(), namaTF.getText(), Integer.parseInt(noSalesmanTF.getText()), alamatTF.getText());
         }
@@ -60,7 +61,7 @@ public class AddsalesController implements Initializable {
 
     public void setTFs(Salesman sales) {
         dialogTitle.setText("Rubah Salesman");
-        salesman = sales;
+        this.salesman = sales;
         noSalesmanTF.setText( Integer.toString(sales.getNo_salesman()));
         namaTF.setText(sales.getNama());
         alamatTF.setText(sales.getAlamat());

@@ -54,7 +54,11 @@ public class LanggananController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                dao.add(c.getLangganan());
+                if (dao.add(c.getLangganan())) {
+                    System.out.println("ADD LANGGANAN OK");
+                } else {
+                    System.out.println("ADD LANGGANAN FAILED");
+                }
             }
 
 
@@ -85,7 +89,11 @@ public class LanggananController implements Initializable {
             tableView.getSelectionModel().clearSelection();
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                dao.update(index, c.getLangganan());
+                if (dao.update(index, c.getLangganan())) {
+                    System.out.println("UPDATE LANGGANAN OK");
+                } else {
+                    System.out.println("UPDATE LANGGANAN FAILED");
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -104,7 +112,11 @@ public class LanggananController implements Initializable {
         // show the dialog and wait for a response
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                dao.delete(selectedItem);
+                if (dao.delete(selectedItem)) {
+                    System.out.println("DELETE LANGGANAN OK");
+                } else {
+                    System.out.println("DELETE LANGGANAN FAILED");
+                }
             }
 
             tableView.getSelectionModel().clearSelection();

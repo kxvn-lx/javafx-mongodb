@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
+import org.bson.types.ObjectId;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +17,7 @@ public class AddLanggananController implements Initializable {
     @FXML private TextField noLanggananTF;
     @FXML private TextField namaTF;
     @FXML private TextField alamatTF;
+    private Langganan langganan;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -24,7 +26,7 @@ public class AddLanggananController implements Initializable {
     }
 
     public Langganan getLangganan() {
-        return new Langganan(noLanggananTF.getText().toUpperCase(), namaTF.getText(), alamatTF.getText());
+        return new Langganan(langganan == null ? new ObjectId() : langganan.getId(), noLanggananTF.getText().toUpperCase(), namaTF.getText(), alamatTF.getText());
     }
 
     public boolean isNull() {
@@ -33,6 +35,7 @@ public class AddLanggananController implements Initializable {
 
     public void setTFs(Langganan lg) {
         dialogPane.setHeaderText("Rubah Langganan");
+        this.langganan = lg;
 
         noLanggananTF.setText(lg.getNo_langganan());
         namaTF.setText(lg.getNama());

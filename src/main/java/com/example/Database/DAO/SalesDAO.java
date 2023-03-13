@@ -51,7 +51,7 @@ public class SalesDAO implements DataAcccessObject<Salesman> {
         try {
             MongoCollection<Document> collection = co.getCollection();
 
-            Document salesDoc = new Document("_id", new ObjectId());
+            Document salesDoc = new Document("_id", s.getId());
             salesDoc.append("no_salesman", s.getNo_salesman())
                     .append("nama", s.getNama())
                     .append("alamat", s.getAlamat());
@@ -61,8 +61,8 @@ public class SalesDAO implements DataAcccessObject<Salesman> {
             e.printStackTrace();
         } finally {
             co.close();
-            if (result.wasAcknowledged()) Platform.runLater(() -> data.add(s));
-            return result.wasAcknowledged();
+            if (result.wasAcknowledged() && result.getInsertedId() != null) Platform.runLater(() -> data.add(s));
+            return result.wasAcknowledged() && result.getInsertedId() != null;
         }
     }
     public ObservableList<Salesman> getAll() {
@@ -80,8 +80,8 @@ public class SalesDAO implements DataAcccessObject<Salesman> {
             e.printStackTrace();
         } finally {
             co.close();
-            if (result.wasAcknowledged()) Platform.runLater(() -> data.set(index, s));
-            return result.wasAcknowledged();
+            if (result.wasAcknowledged() && result.getModifiedCount() > 0) Platform.runLater(() -> data.set(index, s));
+            return result.wasAcknowledged() && result.getModifiedCount() > 0;
         }
     }
     public boolean delete(Salesman s) {
@@ -97,8 +97,8 @@ public class SalesDAO implements DataAcccessObject<Salesman> {
             e.printStackTrace();
         } finally {
             co.close();
-            if (result.wasAcknowledged()) Platform.runLater(() -> data.remove(s));
-            return result.wasAcknowledged();
+            if (result.wasAcknowledged() && result.getDeletedCount() > 0) Platform.runLater(() -> data.remove(s));
+            return result.wasAcknowledged() && result.getDeletedCount() > 0;
         }
     }
     @Override

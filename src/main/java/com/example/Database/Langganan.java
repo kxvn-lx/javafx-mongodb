@@ -22,12 +22,6 @@ public class Langganan {
         this.alamat = alamat;
     }
 
-    @Override
-    public String toString() {
-        super.toString();
-        return no_langganan + ":" + nama;
-    }
-
     public Document toDocument() {
         return new Document("_id", this.getId())
                 .append("no_langganan", this.getNo_langganan())
@@ -57,5 +51,15 @@ public class Langganan {
     }
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Langganan{" +
+                "id=" + id +
+                ", no_langganan='" + no_langganan + '\'' +
+                ", nama='" + nama + '\'' +
+                ", alamat='" + alamat + '\'' +
+                '}';
     }
 }
