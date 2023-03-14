@@ -6,6 +6,7 @@ import com.example.Database.DAO.LanggananDAO;
 import com.example.Database.DAO.PenjualanDAO;
 import com.example.Database.DAO.SalesDAO;
 import com.example.Utils.DateGenerator;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
@@ -190,6 +192,30 @@ public class AddPenjualanController implements Initializable {
             int jumlah = pj.getStock().getHarga() * pj.getQty();
             return new SimpleStringProperty(Integer.toString(jumlah));
         });
+
+        suggestionListView.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<Object> call(ListView<Object> objectListView) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(Object item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty || item == null) {
+                            setText(null);
+                        } else {
+                            if (item instanceof Salesman) {
+                                Salesman salesman = (Salesman) item;
+                                setText(salesman.getDescription());
+                            } else if (item instanceof Langganan) {
+                                Langganan langganan = (Langganan) item;
+                                setText(langganan.getDescription());
+                            }
+                        }
+                    }
+                };
+            }
+        });
     }
     private void applyListeners() {
         // Major validation
@@ -258,6 +284,7 @@ public class AddPenjualanController implements Initializable {
         noSalesmanTF.textProperty().addListener((observableValue, s, t1) -> {
             if (t1.isEmpty()) {
                 suggestionListView.getItems().clear();
+                suggestionListView.getItems().addAll(salesDAO.getAll());
                 return;
             }
             List<Salesman> arr = salesDAO.findContains(t1);
@@ -282,9 +309,9 @@ public class AddPenjualanController implements Initializable {
         noLanggananTF.textProperty().addListener((observableValue, s, t1) -> {
             if (t1.isEmpty()) {
                 suggestionListView.getItems().clear();
+                suggestionListView.getItems().setAll(langgananDAO.getAll());
                 return;
             }
-
 
             List<Langganan> arr = langgananDAO.findContains(t1);
             suggestionListView.getItems().clear();
@@ -298,16 +325,15 @@ public class AddPenjualanController implements Initializable {
             if (t1 instanceof Salesman) {
                 Salesman s = (Salesman) t1;
                 if (!noSalesmanTF.getText().equals(Integer.toString(s.getNo_salesman()))) {
-                    noSalesmanTF.setText(Integer.toString(s.getNo_salesman()));
+                    Platform.runLater(() -> noSalesmanTF.setText(Integer.toString(s.getNo_salesman())));
                 }
             } else if (t1 instanceof Langganan) {
                 Langganan l = (Langganan) t1;
                 if (!noLanggananTF.getText().equals(l.getNo_langganan())) {
-                    noLanggananTF.setText(l.getNo_langganan());
+                    Platform.runLater(() -> noLanggananTF.setText(l.getNo_langganan()));
                 }
             }
-            suggestionListView.getItems().clear();
-            suggestionListView.setFocusTraversable(false);
+           Platform.runLater(() ->  suggestionListView.getItems().clear());
         });
 
         // statusCB listener

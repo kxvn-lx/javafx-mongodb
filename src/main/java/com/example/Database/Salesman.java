@@ -23,10 +23,16 @@ public class Salesman {
 
     @Override
     public String toString() {
-        super.toString();
-        return no_salesman + ":" + nama;
+        return "Salesman{" +
+                "no_salesman=" + no_salesman +
+                ", nama='" + nama + '\'' +
+                ", alamat='" + alamat + '\'' +
+                '}';
     }
 
+    public String getDescription() {
+        return no_salesman + " : " + nama + " : " + alamat;
+    }
     public Document toDocument() {
         return new Document("_id", this.getId())
                 .append("no_salesman", this.getNo_salesman())

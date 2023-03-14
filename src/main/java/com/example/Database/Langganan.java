@@ -22,6 +22,9 @@ public class Langganan {
                 .append("nama", this.getNama())
                 .append("alamat", this.getAlamat());
     }
+    public String getDescription() {
+        return no_langganan + " : " + nama + " : " + alamat;
+    }
     public String getNo_langganan() {
         return no_langganan;
     }
