@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<DialogPane fx:id="dialogPane" headerText="Tambah Stock" prefHeight="793.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.Dialogs.AddStockController">
+<DialogPane fx:id="dialogPane" headerText="Tambah Stock" prefHeight="500.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bjb2.Controllers.Dialogs.AddStockController">
    <content>
-      <GridPane prefHeight="772.0" prefWidth="865.0">
+      <GridPane prefWidth="335.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="423.7297668457031" minWidth="10.0" prefWidth="423.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="422.7297668457031" minWidth="10.0" prefWidth="420.0" />
