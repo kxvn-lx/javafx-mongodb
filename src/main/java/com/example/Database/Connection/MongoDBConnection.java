@@ -21,14 +21,6 @@ public class MongoDBConnection {
     public MongoDBConnection(String dbName, String collectionName) {
         this.dbName = dbName;
         this.collectionName = collectionName;
-
-        try {
-            this.mongoClient = MongoClients.create(getClientSettings());
-            System.out.println("Connected to MongoDB server");
-        } catch (MongoSocketException e) {
-            System.err.println("Failed to connect to MongoDB server: " + e.getMessage());
-            throw e;
-        }
     }
 
     public MongoCollection<Document> getCollection() throws MongoException {

@@ -24,7 +24,7 @@
                <columns>
                   <TableColumn fx:id="kodeCol" prefWidth="108.0" text="Kode" />
                   <TableColumn fx:id="namaCol" prefWidth="200.0" text="Nama" />
-                  <TableColumn fx:id="merekCol" minWidth="0.0" prefWidth="19.0" text="Merek" />
+                  <TableColumn fx:id="merekCol" minWidth="0.0" prefWidth="110" text="Merek" />
                   <TableColumn fx:id="hargaCol" prefWidth="100.0" text="Harga" />
                   <TableColumn fx:id="satuanCol" prefWidth="81.0" text="Satuan" />
                </columns>
