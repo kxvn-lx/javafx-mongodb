@@ -224,9 +224,7 @@ public class AddPenjualanController implements Initializable {
         List<Penjualan> penjualanList = penjualanDAO.getAll();
         noFakturTF.textProperty().addListener(((observableValue, s, t1) -> {
             if (noFakturTF.getText().isEmpty()) {
-                noSalesmanTF.setText("");
-                noLanggananTF.setText("");
-                tanggalTF.setText(DateGenerator.getCurrentDate());
+                updateWhenPFound(false);
                 return;
             };
 
@@ -236,7 +234,7 @@ public class AddPenjualanController implements Initializable {
             if (!filtered.isEmpty()) optionalPenjualan.setValue(Optional.ofNullable(filtered.get(0)));
             else optionalPenjualan.setValue(Optional.empty());
 
-            updateWhenPFound(optionalPenjualan.get().isEmpty());
+            updateWhenPFound(optionalPenjualan.get().isPresent());
         }));
         noFakturTF.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -322,11 +320,18 @@ public class AddPenjualanController implements Initializable {
      */
     private void updateWhenPFound(boolean found) {
         if (optionalPenjualan.get().isEmpty() && !found) return;
+
         if (found) {
             Optional<Salesman> s = salesDAO.findByNo(Integer.toString(optionalPenjualan.get().get().getNoSalesman()));
-            s.ifPresent(salesman -> salesman_namaText.setText(salesman.getNama()));
+            s.ifPresent(salesman -> {
+                salesman_namaText.setText(salesman.getNama());
+                noSalesmanTF.setText(Integer.toString(salesman.getNo_salesman()));
+            });
             Optional<Langganan> l = langgananDAO.findByNo(optionalPenjualan.get().get().getNoLangganan());
-            l.ifPresent(langganan -> langganan_namaText.setText(langganan.getNama()));
+            l.ifPresent(langganan -> {
+                langganan_namaText.setText(langganan.getNama());
+                noLanggananTF.setText(langganan.getNo_langganan());
+            });
 
             statusCB.getSelectionModel().select(optionalPenjualan.get().get().getStatus());
             tanggalTF.setText(optionalPenjualan.get().get().getTanggal());
@@ -334,6 +339,8 @@ public class AddPenjualanController implements Initializable {
         } else {
             langganan_namaText.setText("");
             salesman_namaText.setText("");
+            noLanggananTF.setText("");
+            noSalesmanTF.setText("");
             statusCB.getSelectionModel().selectFirst();
             tanggalTF.setText(DateGenerator.getCurrentDate());
             tableView.getItems().clear();

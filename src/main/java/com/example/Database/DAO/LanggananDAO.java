@@ -118,18 +118,10 @@ public class LanggananDAO implements DataAcccessObject<Langganan> {
         List<Langganan> fetched = new ArrayList<>();
         MongoCollection<Document> collection = co.getCollection();
         for (Document doc : collection.find()) {
-            Langganan obj = new Langganan(doc.getObjectId("_id"), doc.get("nama").toString(), doc.getString("no_langganan"), doc.getString("alamat"));
+            Langganan obj = new Langganan(doc.getObjectId("_id"), doc.getString("no_langganan"), doc.get("nama").toString(), doc.getString("alamat"));
             fetched.add(obj);
         }
         return fetched;
-
-//        return new ArrayList<>(
-//                Arrays.asList(
-//                        new Langganan("MTH202", "Mentari Jaya", "Perkamil"),
-//                        new Langganan("HS", "ENAM", "Jengki"),
-//                        new Langganan("MRT101", "Orion", "Morotai"),
-//                        new Langganan("BTG050", "Girian", "Bitung") )
-//        );
     }
 
 }
