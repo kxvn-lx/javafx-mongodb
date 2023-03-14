@@ -48,15 +48,7 @@ public class StockDAO implements DataAcccessObject<Stock> {
     public boolean add(Stock s) {
         try {
             MongoCollection<Document> collection = co.getCollection();
-
-            Document doc = new Document("_id", s.getId());
-                    doc.append("kode", s.getKode())
-                    .append("nama", s.getNama())
-                    .append("merek", s.getMerek())
-                    .append("harga", s.getHarga())
-                    .append("satuan", s.getSatuan());
-
-            InsertOneResult result = collection.insertOne(doc);
+            InsertOneResult result = collection.insertOne(s.toDocument());
             if (result.wasAcknowledged() && result.getInsertedId() != null) Platform.runLater(() -> data.add(s));
             return result.wasAcknowledged() && result.getInsertedId() != null;
         } catch (MongoException e) {

@@ -69,7 +69,6 @@ public class PenjualanController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                System.out.println(c.getPenjualan());
                 if (dao.add(c.getPenjualan())) {
                     System.out.println("ADD PENJUALAN OK");
                 } else {
@@ -116,7 +115,6 @@ public class PenjualanController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
     public void handleHapusBtn() {
         // Get the selection model
         TableView.TableViewSelectionModel<Penjualan> selectionModel = tableView.getSelectionModel();

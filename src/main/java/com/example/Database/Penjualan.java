@@ -38,7 +38,7 @@ public class Penjualan {
                 ", noLangganan='" + noLangganan + '\'' +
                 ", tanggal='" + tanggal + '\'' +
                 ", status=" + status +
-                ", pjs=" + pjs.length +
+                ", pjs=" + Arrays.toString(pjs) +
                 ", jumlah=" + jumlah +
                 ", setoran=" + setoran +
                 '}';

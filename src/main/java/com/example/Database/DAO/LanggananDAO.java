@@ -51,13 +51,7 @@ public class LanggananDAO implements DataAcccessObject<Langganan> {
     public boolean add(Langganan s) {
         try {
             MongoCollection<Document> collection = co.getCollection();
-
-            Document doc = new Document("_id", s.getId());
-            doc.append("no_langganan", s.getNo_langganan())
-                    .append("nama", s.getNama())
-                    .append("alamat", s.getAlamat());
-
-            InsertOneResult result = collection.insertOne(doc);
+            InsertOneResult result = collection.insertOne(s.toDocument());
             if (result.wasAcknowledged() && result.getInsertedId() != null) Platform.runLater(() -> data.add(s));
             return true;
         } catch (MongoException e) {

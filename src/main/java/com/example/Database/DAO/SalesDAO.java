@@ -50,13 +50,7 @@ public class SalesDAO implements DataAcccessObject<Salesman> {
         InsertOneResult result = null;
         try {
             MongoCollection<Document> collection = co.getCollection();
-
-            Document salesDoc = new Document("_id", s.getId());
-            salesDoc.append("no_salesman", s.getNo_salesman())
-                    .append("nama", s.getNama())
-                    .append("alamat", s.getAlamat());
-
-            result = collection.insertOne(salesDoc);
+            result = collection.insertOne(s.toDocument());
         } catch (MongoException e) {
             e.printStackTrace();
         } finally {

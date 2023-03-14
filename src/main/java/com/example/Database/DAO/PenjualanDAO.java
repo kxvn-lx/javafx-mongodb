@@ -55,18 +55,7 @@ public class PenjualanDAO implements DataAcccessObject<Penjualan> {
 
         try {
             MongoCollection<Document> collection = co.getCollection();
-
-            Document doc = new Document("_id", s.getId());
-            doc.append("no_faktur", s.getNoFaktur())
-                    .append("no_salesman", s.getNoSalesman())
-                    .append("no_langganan", s.getNoLangganan())
-                    .append("tanggal", s.getTanggal())
-                    .append("status", s.getStatus())
-                    .append("penjualan_stock", s.getPjs())
-                    .append("jumlah", s.getJumlah())
-                    .append("setoran", s.getSetoran());
-
-            InsertOneResult result = collection.insertOne(doc);
+            InsertOneResult result = collection.insertOne(s.toDocument());
             if (result.wasAcknowledged() && result.getInsertedId() != null) Platform.runLater(() -> data.add(s));
             return result.wasAcknowledged() && result.getInsertedId() != null;
         } catch (MongoException e) {
@@ -183,33 +172,5 @@ public class PenjualanDAO implements DataAcccessObject<Penjualan> {
             list.add(s);
         }
         return list;
-
-//        List<Stock> stocks = new ArrayList<>(
-//                Arrays.asList(
-//                        new Stock("HD15BP", "Tas 15 /50/20L Ramah Lingkungan", "BAJA", 1011000, "Karung"),
-//                        new Stock("PE820", "PE 8x20 @0.2KG/PAK", "Hijau Daun", 360000, "Rol"),
-//                        new Stock("PP1000", "PP 1KG 15X27 @5PAK @10KG", "Hijau Daun", 350000, "Kg"),
-//                        new Stock("PP6", "PP Rol 6x0.3 @ 30ROL", "Malaikat jatuh", 297000, "Rol")
-//                )
-//        );
-//
-//        return new ArrayList<>(
-//                List.of(
-//                        new Penjualan(new ObjectId(),10500
-//                                , 1,
-//                                "MTH202",
-//                                new Date().toString(),
-//                                Status.C,
-//                                new PenjualanStock[]{
-//                                        new PenjualanStock(stocks.get(0), 2),
-//                                        new PenjualanStock(stocks.get(1), 5),
-//                                        new PenjualanStock(stocks.get(2), 10),
-//                                        new PenjualanStock(stocks.get(3), 1),
-//                                },
-//                                7619000,
-//                                0
-//                        )
-//                )
-//        );
     }
 }

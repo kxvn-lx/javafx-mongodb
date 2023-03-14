@@ -45,9 +45,10 @@ public class AddPenjualanStockController implements Initializable {
     }
 
     public PenjualanStock getPenjualanStock() {
-        if (stockDAO.findByNo(kdStockTF.getText()).isPresent()) {
-            return new PenjualanStock(penjualanStock == null ? penjualanStock.getId() : new ObjectId(), stockDAO.findByNo(kdStockTF.getText()).get(), Integer.parseInt(qtyTF.getText()));
+        if (stockDAO.findByNo(kdStockTF.getText().trim()).isPresent()) {
+            return new PenjualanStock(penjualanStock != null ? penjualanStock.getId() : new ObjectId(), stockDAO.findByNo(kdStockTF.getText().trim()).get(), Integer.parseInt(qtyTF.getText().trim()));
         } else {
+            System.out.println("Cannot find stock by Kode stock");
             throw new RuntimeException();
         }
     }

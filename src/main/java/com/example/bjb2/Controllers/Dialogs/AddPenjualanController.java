@@ -170,6 +170,7 @@ public class AddPenjualanController implements Initializable {
 
         this.optionalPenjualan.setValue(Optional.ofNullable(p));
 
+        assert p != null;
         noFakturTF.setText(Integer.toString(p.getNoFaktur()));
         noSalesmanTF.setText(Integer.toString(p.getNoSalesman()));
         noLanggananTF.setText(p.getNoLangganan());
@@ -198,11 +199,7 @@ public class AddPenjualanController implements Initializable {
         }
 
         // create a change listener to monitor the optional value
-        optionalPenjualan.addListener((observable, oldValue, newValue) -> {
-            if (newValue.isPresent()) {
-                updateWhenPFound();
-            }
-        });
+        optionalPenjualan.addListener((observable, oldValue, newValue) -> updateWhenPFound(newValue.isPresent()));
 
         // Listen to tableView updates
         tableView.getItems().addListener((ListChangeListener.Change<? extends PenjualanStock> change) -> {
@@ -237,21 +234,15 @@ public class AddPenjualanController implements Initializable {
                     .filter(penjualan -> penjualan.getNoFaktur() == Integer.parseInt(noFakturTF.getText()))
                     .collect(Collectors.toList());
             if (!filtered.isEmpty()) optionalPenjualan.setValue(Optional.ofNullable(filtered.get(0)));
-            else {
-                noSalesmanTF.setText("");
-                noLanggananTF.setText("");
-                tanggalTF.setText(DateGenerator.getCurrentDate());
-                statusCB.getSelectionModel().selectFirst();
-            }
+            else optionalPenjualan.setValue(Optional.empty());
 
-            if (optionalPenjualan.get().isPresent()) {
-                noSalesmanTF.setText(Integer.toString(optionalPenjualan.get().get().getNoSalesman()));
-                noLanggananTF.setText(optionalPenjualan.get().get().getNoLangganan());
-                tanggalTF.setText(optionalPenjualan.get().get().getTanggal());
-                statusCB.getSelectionModel().select(optionalPenjualan.get().get().getStatus());
-
-            }
+            updateWhenPFound(optionalPenjualan.get().isEmpty());
         }));
+        noFakturTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                noFakturTF.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
 
         noSalesmanTF.textProperty().addListener(((observableValue, s, t1) -> {
             if (t1.isEmpty() || !isInteger(t1)) {
@@ -329,14 +320,24 @@ public class AddPenjualanController implements Initializable {
     /**
      * Update the UI when Penjualan is found after typing on NoFaktur
      */
-    private void updateWhenPFound() {
-        Optional<Salesman> s = salesDAO.findByNo(Integer.toString(optionalPenjualan.get().get().getNoSalesman()));
-        s.ifPresent(salesman -> salesman_namaText.setText(salesman.getNama()));
+    private void updateWhenPFound(boolean found) {
+        if (optionalPenjualan.get().isEmpty() && !found) return;
+        if (found) {
+            Optional<Salesman> s = salesDAO.findByNo(Integer.toString(optionalPenjualan.get().get().getNoSalesman()));
+            s.ifPresent(salesman -> salesman_namaText.setText(salesman.getNama()));
+            Optional<Langganan> l = langgananDAO.findByNo(optionalPenjualan.get().get().getNoLangganan());
+            l.ifPresent(langganan -> langganan_namaText.setText(langganan.getNama()));
 
-        Optional<Langganan> l = langgananDAO.findByNo(optionalPenjualan.get().get().getNoLangganan());
-        l.ifPresent(langganan -> langganan_namaText.setText(langganan.getNama()));
-
-        optionalPenjualan.get().ifPresent(penjualan -> tableView.getItems().setAll(penjualan.getPjs()));
+            statusCB.getSelectionModel().select(optionalPenjualan.get().get().getStatus());
+            tanggalTF.setText(optionalPenjualan.get().get().getTanggal());
+            optionalPenjualan.get().ifPresent(penjualan -> tableView.getItems().setAll(penjualan.getPjs()));
+        } else {
+            langganan_namaText.setText("");
+            salesman_namaText.setText("");
+            statusCB.getSelectionModel().selectFirst();
+            tanggalTF.setText(DateGenerator.getCurrentDate());
+            tableView.getItems().clear();
+        }
     }
     private int calculateJumlah() {
         int sum = 0;
