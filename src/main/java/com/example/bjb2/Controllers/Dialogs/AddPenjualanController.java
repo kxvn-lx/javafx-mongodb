@@ -164,7 +164,8 @@ public class AddPenjualanController implements Initializable {
                 statusCB.getValue(),
                 pjs.toArray(new PenjualanStock[0]),
                 calculateJumlah(),
-                optionalPenjualan.get().isPresent() ? optionalPenjualan.get().get().getSetoran() : 0
+                optionalPenjualan.get().isPresent() ? optionalPenjualan.get().get().getSetoran() : 0,
+                statusCB.getValue() == Status.K ? Integer.parseInt(kreditTF.getText().trim()) : 0
         );
     }
     public void setTFs(Penjualan p) {
@@ -180,6 +181,7 @@ public class AddPenjualanController implements Initializable {
         statusCB.getSelectionModel().select(p.getStatus());
         tableView.getItems().setAll(p.getPjs());
         totalText.setText(formatRupiah.format(Double.parseDouble(Integer.toString(p.getJumlah()))));
+        kreditTF.setText(Integer.toString(p.getHariKredit()));
     }
 
     private void applyColCellFactory() {
@@ -340,6 +342,12 @@ public class AddPenjualanController implements Initializable {
         statusCB.getSelectionModel().selectedItemProperty().addListener(
                 (observableValue, status, t1) -> kreditHBox.setVisible(t1 == Status.K)
         );
+
+        kreditTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                kreditTF.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
     }
     /**
      * Update the UI when Penjualan is found after typing on NoFaktur

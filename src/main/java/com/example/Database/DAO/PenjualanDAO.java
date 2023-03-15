@@ -167,7 +167,8 @@ public class PenjualanDAO implements DataAcccessObject<Penjualan> {
                     Status.valueOf(doc.getString("status")),
                     penjualanStocks.toArray(new PenjualanStock[0]),
                     doc.getInteger("jumlah"),
-                    doc.getInteger("setoran")
+                    doc.getInteger("setoran"),
+                    doc.getInteger("hari_kredit")
             );
             list.add(s);
         }

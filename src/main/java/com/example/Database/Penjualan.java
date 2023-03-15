@@ -18,7 +18,9 @@ public class Penjualan {
     private Integer jumlah;
     private Integer setoran;
 
-    public Penjualan(ObjectId id, Integer noFaktur, Integer noSalesman, String noLangganan, String tanggal, Status status, PenjualanStock[] pjs, Integer jumlah, Integer setoran) {
+    private Integer hariKredit;
+
+    public Penjualan(ObjectId id, Integer noFaktur, Integer noSalesman, String noLangganan, String tanggal, Status status, PenjualanStock[] pjs, Integer jumlah, Integer setoran, Integer hariKredit) {
         this.id = id;
         this.noFaktur = noFaktur;
         this.noSalesman = noSalesman;
@@ -28,6 +30,7 @@ public class Penjualan {
         this.pjs = pjs;
         this.jumlah = jumlah;
         this.setoran = setoran;
+        this.hariKredit = hariKredit;
     }
 
     @Override
@@ -41,6 +44,7 @@ public class Penjualan {
                 ", pjs=" + Arrays.toString(pjs) +
                 ", jumlah=" + jumlah +
                 ", setoran=" + setoran +
+                ", hariKredit=" + hariKredit +
                 '}';
     }
 
@@ -53,7 +57,8 @@ public class Penjualan {
                 .append("status", this.getStatus())
                 .append("penjualan_stock", Arrays.asList(this.getPjs()))
                 .append("jumlah", this.getJumlah())
-                .append("setoran", this.getSetoran());
+                .append("setoran", this.getSetoran())
+                .append("hari_kredit", this.getHariKredit());
         return doc;
     }
     public Integer getNoFaktur() {
@@ -101,6 +106,12 @@ public class Penjualan {
     }
     public void setId(ObjectId id) {
         this.id = id;
+    }
+    public Integer getHariKredit() {
+        return hariKredit;
+    }
+    public void setHariKredit(Integer hariKredit) {
+        this.hariKredit = hariKredit;
     }
 
 }

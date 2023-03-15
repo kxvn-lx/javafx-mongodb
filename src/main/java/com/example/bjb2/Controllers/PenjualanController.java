@@ -104,7 +104,6 @@ public class PenjualanController implements Initializable {
             tableView.getSelectionModel().clearSelection();
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.get() == ButtonType.OK) {
-                System.out.println(selectedItem);
                 if (dao.update(index, c.getPenjualan())) {
                     System.out.println("UPDATE PENJUALAN OK");
                 } else {
