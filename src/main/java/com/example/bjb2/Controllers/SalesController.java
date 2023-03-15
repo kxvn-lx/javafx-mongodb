@@ -143,7 +143,7 @@ public class SalesController implements Initializable {
 
     private void setupContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem menuItem1 = new MenuItem("Deselect");
+        MenuItem menuItem1 = new MenuItem("Batal memilih");
         menuItem1.setOnAction(event -> {
             tableView.getSelectionModel().clearSelection();
         });
